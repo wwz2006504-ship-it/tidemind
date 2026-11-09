@@ -1,0 +1,29 @@
+{
+  "lease": {
+    "path": "deploy/existing/lease.mjs",
+    "sha256": "c73cf606cd6f236fc5b456feb79b4e8199fe24e5d74dd070e912d5873a574abc",
+    "commands": {
+      "run": [
+        "--dry-run"
+      ]
+    }
+  },
+  "reconcile": {
+    "path": "deploy/existing/reconcile.mjs",
+    "sha256": "8f64eafe03ebc2d314c6c45795e5596f0ab3c9184a28e986c388a38f2bc7d7c9",
+    "commands": {
+      "run": [
+        "--dry-run"
+      ]
+    }
+  },
+  "api": {
+    "path": "deploy/existing/tidemind-api.mjs",
+    "sha256": "deaa36d62e2c84067d4429293e521729d19b4fe64be76de35be92ee9c208bf2e",
+    "commands": {
+      "run": [
+        "--dry-run"
+      ]
+    }
+  }
+}

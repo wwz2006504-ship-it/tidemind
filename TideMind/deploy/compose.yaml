@@ -1,0 +1,90 @@
+{
+  "name": "tidemind-research",
+  "services": {
+    "api": {
+      "profiles": [
+        "integration-pending"
+      ],
+      "build": {
+        "context": "../..",
+        "dockerfile": "TideMind/deploy/Dockerfile"
+      },
+      "user": "1000:1000",
+      "read_only": true,
+      "network_mode": "none",
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "command": [
+        "node",
+        "/app/TideMind/deploy/existing/tidemind-api.mjs",
+        "--dry-run"
+      ],
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "tidemind_shadow",
+          "target": "/data",
+          "read_only": true
+        }
+      ],
+      "tmpfs": [
+        "/tmp:size=16m"
+      ],
+      "pids_limit": 64,
+      "mem_limit": "256m",
+      "cpus": 0.5,
+      "restart": "no"
+    },
+    "authority": {
+      "profiles": [
+        "integration-pending"
+      ],
+      "build": {
+        "context": "../..",
+        "dockerfile": "TideMind/deploy/Dockerfile"
+      },
+      "user": "1000:1000",
+      "read_only": true,
+      "network_mode": "none",
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "command": [
+        "node",
+        "/app/TideMind/deploy/existing/lease.mjs",
+        "serve",
+        "--dry-run"
+      ],
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "tidemind_shadow",
+          "target": "/data",
+          "read_only": true
+        }
+      ],
+      "tmpfs": [
+        "/tmp:size=16m"
+      ],
+      "pids_limit": 64,
+      "mem_limit": "256m",
+      "cpus": 0.5,
+      "restart": "no"
+    }
+  },
+  "volumes": {
+    "tidemind_shadow": {}
+  },
+  "x-safety-contract": {
+    "mode": "OFFLINE_DRY_RUN_ONLY",
+    "mount-policy": "Only the internal tidemind_shadow named volume is permitted; host bind mounts and external/driver volumes are forbidden. Validate with python manage.py check --dry-run before invoking Compose.",
+    "entry-policy": "Existing tidemind-api.mjs only. No substitute API/lease/reconcile. Integration requires original scripts and review."
+  }
+}

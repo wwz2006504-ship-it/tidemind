@@ -1,0 +1,26 @@
+{
+  "index.js": {
+    "originalSha256": "23f933e8f6f3c6ef8cfa7fd0f0a743e480ff91c0b96bc9b4c292d3f12be75c31",
+    "isolatedSha256": "e490b84b6500bae5bdb633a1eff25b42fc4efe926ca5462bca34dc6a72aedbb3"
+  },
+  "store.js": {
+    "originalSha256": "9e634d2ec52b11ace2efae68eda8b09e5b46d19e0f2d22e8edbce2f461bddf29",
+    "isolatedSha256": "4e9de919a9172ead5a8edf5eeba4de4f0eb928dd67e56c6061728336ef0b3ca3"
+  },
+  "retrieval.js": {
+    "originalSha256": "5eccde3cd567128ea357262b96b4677cef4d3d9779f408063c89896a7d8ea9f0",
+    "isolatedSha256": "fbfc8a2bd77099b1e239c2b96635d99115bd4809ad4094eba6a76ca2ac77efa4"
+  },
+  "extract.js": {
+    "originalSha256": "53b00602dd3aad7d83fcee7f0bbed6af98fc0120094f01bee1764e1140e81a38",
+    "isolatedSha256": "06413cb2880aa3a00a948f92256370d88dcdae513a54d645c2a1dfe2bff36b4c"
+  },
+  "tools.js": {
+    "originalSha256": "b730949e8d63fcdecddbf996d008767b786ef0e862ca6872329177ac1994fc0e",
+    "isolatedSha256": "1873cd17c367552611663ac54998da81b89c0d901d1049d6725cef9ccff4abd2"
+  },
+  "aurabot.js": {
+    "originalSha256": "430f4d5db3b3176c6369cc467dcbfb78dbf3988ab270165728432b5583cb5bba",
+    "isolatedSha256": "26b52ecbe80477cbe1537fbcc0ba452683eb92b70a54ad74e915c0b56cd7511b"
+  }
+}

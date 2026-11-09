@@ -1,0 +1,6 @@
+data/
+reports/
+**/*.db
+**/*.db-*
+**/.env
+**/node_modules/

@@ -1,0 +1,36 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import {mkdirSync,readFileSync,writeFileSync,readdirSync} from 'node:fs'
+import {join} from 'node:path'
+import {createHash} from 'node:crypto'
+import {DatabaseSync,backup} from 'node:sqlite'
+import {authorityHttpFixture,keys} from './authority-http-fixture.mjs'
+import {createCompositeHead} from './composite-head.mjs'
+import {createSyncDelta} from './sync-delta.mjs'
+import {createMaterializerWorker} from './materializer-worker.mjs'
+const sha=b=>createHash('sha256').update(b).digest('hex'),h='a'.repeat(64),secret='SYNTHETIC MATERIALIZER SYNC KEY LONG 123456',slots=['memory.db','new-memories.json','persona-versions.json','ledger.jsonl']
+async function setup(){const f=await authorityHttpFixture(),baseDirectory=join(f.root,'worker-base'),nextDirectory=join(f.root,'worker-next'),stagingDirectory=join(f.root,'worker-incoming'),journalDirectory=join(f.root,'worker-journal');for(const dir of [baseDirectory,nextDirectory,stagingDirectory,journalDirectory])mkdirSync(dir)
+ for(const [dir,revision]of [[baseDirectory,0],[nextDirectory,1]]){const db=new DatabaseSync(join(f.localDir,'memory.db'),{readOnly:true});try{await backup(db,join(dir,'memory.db'))}finally{db.close()}for(const name of slots.slice(1))writeFileSync(join(dir,name),JSON.stringify({revision,text:'SYNTHETIC DAY '+revision}))}
+ const verifyGeneration=dir=>{const j=JSON.parse(readFileSync(join(dir,slots[1]))),p=JSON.parse(readFileSync(join(dir,slots[2]))),a=JSON.parse(readFileSync(join(dir,slots[3])));return createCompositeHead({sqlite:f.replica.replicaHead(join(dir,'memory.db')),jsonMemory:{overlayRevision:j.revision,overlayHash:sha(readFileSync(join(dir,slots[1]))),baselineSha256:h},persona:{overlayVersion:p.revision,currentHash:sha(readFileSync(join(dir,slots[2]))),sha256:h},aiMemory:{revision:a.revision,hash:sha(readFileSync(join(dir,slots[3]))),baseline:h}})}
+ const baseHead=verifyGeneration(baseDirectory),nextHead=verifyGeneration(nextDirectory),packet=createSyncDelta({baseDirectory,nextDirectory,baseHead,nextHead,op:'materialize-op',holder:'local',term:f.term,target:'cloud',secret,withSourceFence:({holder,term},fn)=>f.lease.fenced(holder,term,fn),readCurrentComposite:()=>nextHead})
+ const config={target:'cloud',authority:f.cloud,secret,materializerKey:keys.cloud,journalDirectory,stagingDirectory,verifyGeneration},args={packet,baseDirectory,expectedBase:baseHead}
+ return {...f,baseDirectory,nextDirectory,stagingDirectory,journalDirectory,verifyGeneration,config,args,nextHead,worker:options=>createMaterializerWorker({...config,...options})}
+}
+test('HTTP materializer validates all candidate files before target signing and persists confirmed receipt',async()=>{const f=await setup();try{let sent=0;const authority={request:async(path,body)=>{if(path==='/sync/receipt')sent++;return f.cloud.request(path,body)}},w=f.worker({authority});const result=await w.receive(f.args);assert.equal(result.state,'confirmed');assert.equal(sent,1);assert.equal(w.status(f.args.packet.op).state,'confirmed');assert.equal(f.verifyGeneration(result.directory).digest,f.nextHead.digest);assert.equal((await f.worker({authority}).receive(f.args)).confirmed,true);assert.equal(sent,1);assert.equal(f.gateway.head(f.lease).home,'local');assert.equal(f.lease.status().holder,'local')}finally{await f.cleanup()}})
+test('dry-run makes no journal, candidate or signature submission',async()=>{const f=await setup();try{let sent=0;const w=f.worker({authority:{request:async(path,body)=>{if(path==='/sync/receipt')sent++;return f.cloud.request(path,body)}}});assert.equal((await w.receive({...f.args,dryRun:true})).dryRun,true);assert.deepEqual(readdirSync(f.journalDirectory),[]);assert.deepEqual(readdirSync(f.stagingDirectory),[]);assert.equal(sent,0)}finally{await f.cleanup()}})
+test('lost receipt response and unavailable status recover by query after source term changes, without resending',async()=>{const f=await setup();try{let attempted=false,sent=0;const unreliable={request:async(path,body)=>{if(path==='/sync/receipt'){sent++;await f.cloud.request(path,body);attempted=true;throw Error('SYNTHETIC LOST RESPONSE')}if(path==='/sync/status'&&attempted)throw Error('SYNTHETIC NETWORK DOWN');return f.cloud.request(path,body)}}
+ const first=await f.worker({authority:unreliable}).receive(f.args);assert.equal(first.state,'receipt-unknown');assert.equal(sent,1)
+ f.lease.release('local',f.term);f.lease.acquire('local',{ttl:60000})
+ const recovered=await f.worker({authority:{request:async(path,body)=>{if(path==='/sync/receipt')assert.fail('must not resend');return f.cloud.request(path,body)}}}).receive(f.args);assert.equal(recovered.confirmed,true);assert.equal(sent,1)
+ }finally{await f.cleanup()}})
+test('unknown unaccepted submission is not blindly retried; explicit exact replay is required',async()=>{const f=await setup();try{let sent=0;const absent={request:async(path,body)=>{if(path==='/sync/receipt'){sent++;throw Error('SYNTHETIC REQUEST LOST BEFORE SERVER')}return f.cloud.request(path,body)}};assert.equal((await f.worker({authority:absent}).receive(f.args)).state,'receipt-unknown');assert.equal((await f.worker({authority:absent}).receive(f.args)).state,'receipt-unknown');assert.equal(sent,1);assert.equal((await f.worker().receive({...f.args,retryUnaccepted:true})).confirmed,true)}finally{await f.cleanup()}})
+test('source lease changing during reconstruction prevents any receipt submission',async()=>{const f=await setup();try{let lost=false,sent=0;const verifyGeneration=dir=>{const head=f.verifyGeneration(dir);if(!lost&&dir!==f.baseDirectory){lost=true;f.lease.release('local',f.term);f.lease.acquire('local',{ttl:60000})}return head};const w=f.worker({verifyGeneration,authority:{request:async(path,body)=>{if(path==='/sync/receipt')sent++;return f.cloud.request(path,body)}}});await assert.rejects(w.receive(f.args),e=>e.status===409);assert.equal(sent,0);assert.equal(w.status(f.args.packet.op).state,'absent')}finally{await f.cleanup()}})
+test('candidate corruption during unknown-result recovery cannot be signed or reported confirmed',async()=>{const f=await setup();try{let attempted=false;const authority={request:async(path,body)=>{if(path==='/sync/receipt'){await f.cloud.request(path,body);attempted=true;throw Error('SYNTHETIC RESPONSE LOST')}if(path==='/sync/status'&&attempted)throw Error('SYNTHETIC DOWN');return f.cloud.request(path,body)}};const first=await f.worker({authority}).receive(f.args);writeFileSync(join(first.directory,'ledger.jsonl'),'SYNTHETIC CORRUPTION');await assert.rejects(f.worker().receive(f.args),/candidate changed/)}finally{await f.cleanup()}})
+
+test('wrong receiving identity cannot check or sign, and lost acknowledged receipt stops recovery',async()=>{
+ const f=await setup();try{await assert.rejects(f.worker({authority:f.local}).receive(f.args),e=>e.status===409);assert.equal(f.worker().status(f.args.packet.op).state,'absent')
+  assert.equal((await f.worker().receive(f.args)).confirmed,true)
+  f.lease.fenced('local',f.term,db=>db.prepare('DELETE FROM tide_sync_receipts WHERE op=?').run(f.args.packet.op))
+  await assert.rejects(f.worker().receive(f.args),/lost an already acknowledged receipt/)
+ }finally{await f.cleanup()}
+})

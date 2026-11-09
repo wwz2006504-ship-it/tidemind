@@ -1,0 +1,11 @@
+{
+  "toolExecution": "autonomous",
+  "perCallHumanApproval": false,
+  "cognitiveTools": "existing",
+  "basis": "2026-11-02 user instruction: tools should act independently; no added tool restrictions",
+  "preserveOriginalMemoryAndPersona": true,
+  "singleWriterAndDedup": true,
+  "restAndBudget": "unchanged",
+  "paidServiceAndProductionSwitchConfirmation": "unchanged",
+  "liveProfileApplied": false
+}
