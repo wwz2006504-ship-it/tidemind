@@ -1,3 +1,5 @@
+**English** | [简体中文](README.zh-CN.md)
+
 # TideMind
 
 An open-source memory / persona / autonomy framework for a long-running AI agent, built around a single-writer authority (SQLite lease with a monotonic term and fenced transactions), signed state sync between a local primary and a cloud standby, and a bounded multi-step task scheduler.
