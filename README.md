@@ -6,6 +6,9 @@ An open-source memory / persona / autonomy framework for a long-running AI agent
 
 > Status: research code. Most integration tests were written against a Windows desktop host (DSH / Aurabot). Tests that need that host are marked below; they will not run without it.
 
+## How this relates to the memory and emotion systems
+TideMind is the control layer built on top of the author's own memory system (the "Tide Pool" memory layers, included as an isolated test copy in `host/plugin`) and the author's mood design. It does not replace them. What it adds is the part around them: a single writer with fencing and rollback between a local primary and a cloud standby, bounded multi-step goals, propose-only autonomy that needs owner approval, and an audited mood / trait layer. The mood modules here (`tide-affect`, `tide-moods`, `tide-traits`) are new implementations of the author's design, not copies of earlier code.
+
 ## What is here
 - `TideMind/` – the framework: lease/authority, reconcile, replica, deploy files, upgrade tests.
 - `integration/` – integration modules and tests.

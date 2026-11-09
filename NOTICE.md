@@ -1,2 +1,3 @@
-Isolated derivative of installed dsh-memory-layers 0.1.1; declared license MIT. Original source hashes and isolated hashes are in host/SOURCE-MANIFEST.json. Original upstream files are unchanged.
-Original Aurabot source subset: dsh-aurabot-qq 1.0.1; declared license MIT. See host/aurabot/SOURCE-MANIFEST.json. No original personas/configuration/credentials are included.
+host/plugin is the repository owner's own memory system ("潮池" / Tide Pool memory layers, package name dsh-memory-layers 0.1.1, MIT). It is included here as an isolated copy for tests; the hashes of the original files and of the isolated copy are in host/SOURCE-MANIFEST.json.
+
+The DSH / Aurabot host sources, private custom modules, personas, memory data and credentials are NOT included in this repository. Install DSH / Aurabot separately under their own licenses.
