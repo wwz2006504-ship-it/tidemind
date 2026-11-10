@@ -61,11 +61,11 @@ test('identity core: unconfirmed change refused, every version kept, revert rest
  try{
   const t=createTraits({...s.args,clock:s.clock})
   assert.equal(t.identity(),null)
-  assert.throws(()=>t.setIdentity({text:'汐羽',reason:'init'}),/confirmation/)
-  assert.equal(t.setIdentity({text:'汐羽 v1',reason:'初始',confirmed:true}).v,1)
-  assert.equal(t.setIdentity({text:'汐羽 v1',reason:'同',confirmed:true}).unchanged,true)
-  assert.equal(t.setIdentity({text:'汐羽 v2',reason:'大改',confirmed:true}).v,2)
+  assert.throws(()=>t.setIdentity({text:'test-agent',reason:'init'}),/confirmation/)
+  assert.equal(t.setIdentity({text:'test-agent v1',reason:'初始',confirmed:true}).v,1)
+  assert.equal(t.setIdentity({text:'test-agent v1',reason:'同',confirmed:true}).unchanged,true)
+  assert.equal(t.setIdentity({text:'test-agent v2',reason:'大改',confirmed:true}).v,2)
   assert.throws(()=>t.revertIdentity(1),/confirmation/)
-  t.revertIdentity(1,{confirmed:true});assert.equal(t.identity().text,'汐羽 v1');assert.equal(t.history().length,2)
+  t.revertIdentity(1,{confirmed:true});assert.equal(t.identity().text,'test-agent v1');assert.equal(t.history().length,2)
  }finally{s.f.cleanup()}
 })

@@ -1,0 +1,17 @@
+{
+  "name": "tidemind",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Single-writer memory/persona/autonomy framework for a long-running local agent",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test integration/test-tide-goals.mjs integration/test-tide-life.mjs integration/test-tide-affect-traits.mjs integration/test-tide-moods.mjs integration/test-tide-mood-rules.mjs integration/test-tide-sense.mjs integration/test-desktop-pulse.mjs integration/test-desktop-pulse-goals.mjs integration/test-lease-prefix.mjs",
+    "test:entries": "cd TideMind && python -m unittest test_entries -v",
+    "install:addon": "python integration/install-desktop-pulse.py",
+    "acceptance": "python integration/acceptance.py --dry-run"
+  }
+}

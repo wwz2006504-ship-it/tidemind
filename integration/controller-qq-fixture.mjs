@@ -9,7 +9,7 @@ export async function controllerQQ(options){
  const f=await controllerHost(options),sent=[],logs=[]
  const paths={TIDEMIND_AURABOT_DATA_ROOT:join(f.root,'aurabot-data'),TIDEMIND_AURABOT_HOME:join(f.root,'aurabot-home'),TIDEMIND_AURABOT_WORKSPACE:join(f.root,'workspace'),TIDEMIND_SELF_NOTES_DIR:join(f.root,'self-notes')}
  for(const [key,path]of Object.entries(paths)){mkdirSync(path,{recursive:true});process.env[key]=path}
- // Explicit pre-bound xiyu identity, never bind arbitrary controller sessions to these memories.
+ // Explicit pre-bound my-agent identity, never bind arbitrary controller sessions to these memories.
  writeFileSync(join(paths.TIDEMIND_AURABOT_DATA_ROOT,'sessions.json'),JSON.stringify({chats:{'private:20001':{sessionId:f.agent.id,preset:'aurabot-private',level:'full',fresh:false}}}))
  const cfg={enabled:true,dryRun:false,botQQ:'10001',ownerQQ:'20001',ownerName:'SYNTHETIC',ownerLevel:'full',allow:{private:['20001'],groups:[]},model:{},memory:{dailyNewSession:false},voice:{enabled:false,autoChance:0},stickers:{enabled:false,collect:false,autoChance:0},merge:{enabled:false},group:{overrides:{}}}
  const outbound=createQQOutbound({...f,selfId:'10001',allowTargets:['private:20001'],historyReader:createSessionHistoryReader(f.ctx.sessionPersistence),transport:async(action,params)=>{sent.push({action,params});return {message_id:90000+sent.length}}})

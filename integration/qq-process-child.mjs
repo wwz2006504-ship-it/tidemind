@@ -51,7 +51,7 @@ if(mode==='crash-admission'){
  const db=lease.openAuthority();let payload
  try{payload=JSON.parse(db.prepare('SELECT payload FROM tide_outbox').get().payload)}finally{db.close()}
  const captured={result:payload.requests.map(()=>({kind:'text',value:'合成发送后中断'})),sent:payload.requests.map(r=>({chatId:'private:20001',message:r.params.message}))}
- const replay=await outbound.reply({sessionId:'session-synthetic-xiyu',turn:1,chatId:'private:20001'},async()=>captured)
+ const replay=await outbound.reply({sessionId:'session-synthetic-my-agent',turn:1,chatId:'private:20001'},async()=>captured)
  const audit=outbound.audit()
  console.log(JSON.stringify({state:replay.state,wireAttempts:readFileSync(join(root,'wire-attempts.txt'),'utf8').trim().split('\n').length,parts:audit.parts.map(r=>r.state)}))
 }else throw new Error('explicit test-only subprocess mode required')

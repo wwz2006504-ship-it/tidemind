@@ -15,7 +15,7 @@ async function openPersistence(root){
 }
 async function setup(){
  const f=await fixture(),source=await openPersistence(join(f.root,'history-source'))
- const writer=await source.persistence.create({version:4,id:'synthetic-history-xiyu',createdAt:1,isSeeded:false,delegationDepth:0,cwd:join(f.root,'workspace')})
+ const writer=await source.persistence.create({version:4,id:'synthetic-history-my-agent',createdAt:1,isSeeded:false,delegationDepth:0,cwd:join(f.root,'workspace')})
  const append=async text=>{const events=(await writer.read(0)).events;await writer.append([{seq:events.length,time:events.length+1,type:'user/message',data:{id:'message-'+events.length,role:'user',content:[{type:'text',text}],source:{kind:'aurabot',origin:'qq-user'}},surfaceOp:'append'}]);await writer.flush()}
  return {...f,source,writer,append,async close(){try{await writer.close();await source.close()}finally{f.cleanup()}}}
 }

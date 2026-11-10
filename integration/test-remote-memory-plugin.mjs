@@ -16,7 +16,7 @@ test('real original memory tools in real Controller/AgentLoop commit through rem
   const authority={request:async(path,body)=>{if(path==='/commit')commits++;return network.local.request(path,body)}}
   const executor=createRemoteStoreExecutor({authority,holder:'local',term:base.term,local:base.local,journalDirectory:journal,MemoryStore:base.MemoryStore})
   // Deliberately omit lease/gateway: any old synchronous shortcut must fail this test.
-  fenced.configure({root:base.root,local:base.local,localDir:base.localDir,remoteStoreExecutor:executor,bindings:[{agentId:host.agent.id,sessionId:host.agent.id,logicalAgentId:'xiyu'}]})
+  fenced.configure({root:base.root,local:base.local,localDir:base.localDir,remoteStoreExecutor:executor,bindings:[{agentId:host.agent.id,sessionId:host.agent.id,logicalAgentId:'my-agent'}]})
   fiber=host.ctx.plugin({name:'remote-original-memory-test',inject:memory.inject,apply(child){memory.apply(child,{dir:base.localDir,enabled:true,injectContext:true,autoCapture:false,tideEnabled:false,dailyBackup:false,logRetrieval:false,injectTokenBudget:2000})}});await fiber.await()
   host.agent.followup({id:'synthetic-remote-memory-turn',role:'user',content:[{type:'text',text:'麦克风 合成远端写入工具验证'}],source:{kind:'plugin'}})
   for(let i=0;i<500;i++){if(host.agent.status==='idle'&&host.agent.session.snapshotEvents().some(e=>e.type==='turn/end'))break;await new Promise(r=>setTimeout(r,5))}

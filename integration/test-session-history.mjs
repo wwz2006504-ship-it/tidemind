@@ -13,7 +13,7 @@ test('installed DSH JSONL persistence proves admitted and consumed input; restar
  try{
   const [{Context},backend,{SESSION_FORMAT_VERSION}]=await Promise.all([load('cordis'),load('dsh-session-persistence-jsonl'),load('dsh-session')])
   ctx=new Context();await backend.apply(ctx,{root:join(f.root,'sessions'),compression:'none'})
-  const persistence=ctx.sessionPersistence,sessionId='durable-synthetic-xiyu'
+  const persistence=ctx.sessionPersistence,sessionId='durable-synthetic-my-agent'
   writer=await persistence.create({version:SESSION_FORMAT_VERSION,id:sessionId,createdAt:Date.now(),isSeeded:false,delegationDepth:0,cwd:f.root})
   const reader=createSessionHistoryReader(persistence),{origin}=f.observe(f.event('920'))
   const outbound=createQQOutbound({...f,selfId:'10001',allowTargets:['private:20001'],transport:async()=>assert.fail('no QQ'),historyReader:reader})

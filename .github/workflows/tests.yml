@@ -1,0 +1,44 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  logic:
+    # Tier A: pure logic, no host, no network.
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['22', '24']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Tier A — engine modules
+        run: |
+          node --test integration/test-tide-goals.mjs integration/test-tide-life.mjs \
+            integration/test-tide-affect-traits.mjs integration/test-tide-moods.mjs \
+            integration/test-tide-mood-rules.mjs integration/test-tide-sense.mjs \
+            integration/test-desktop-pulse.mjs integration/test-desktop-pulse-goals.mjs \
+            integration/test-lease-prefix.mjs
+
+  entries:
+    # Tier B: starts the real authority process and the retrieval API. Windows only.
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Tier B — entries
+        working-directory: TideMind
+        run: |
+          python -m unittest test_entries -v
+          node --test test_upgrade.mjs

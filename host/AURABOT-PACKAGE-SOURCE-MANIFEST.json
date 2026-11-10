@@ -1,0 +1,54 @@
+{
+  "LICENSE": {
+    "sha256": "ab818d52c6ab6e784c9fc775f98037d180acf06f4421a7b84c77fe722baeb0f2",
+    "isolatedSha256": "ab818d52c6ab6e784c9fc775f98037d180acf06f4421a7b84c77fe722baeb0f2"
+  },
+  "cordis.patch.yml": {
+    "sha256": "3b1e97fb2214cc43ecb38dc1d37e2e8e0806bd4a805b29361bb960e626361673",
+    "isolatedSha256": "bab87602f6f840f17ba2173cac2dad546ee6f79a17818734352881cda6d0fca5"
+  },
+  "client/client.js": {
+    "sha256": "ee6b0eccdbe27a7665347a3ff1338986fc551621180333bebaaff4f647edf833",
+    "isolatedSha256": "298ae1decf0779b82f5630c1399add1a9c8d999fcf93a1eefba657163b2cf233"
+  },
+  "src/modules/API.md": {
+    "sha256": "f8d495f15bca0a52c4114253346a689779beb2afe53ce9b2a8d178e3df5fe969",
+    "isolatedSha256": "bbe6578e516cf4da8d0cee86caf6d4b60e5f4f7d7cc2b5dd6a967c8540d75084"
+  },
+  "src/modules/aurabot.d.ts": {
+    "sha256": "12710e604e12a10fce6045fd5fd08cb4390252070d631cad887fc378b40b1af0",
+    "isolatedSha256": "12710e604e12a10fce6045fd5fd08cb4390252070d631cad887fc378b40b1af0"
+  },
+  "src/modules/_template/index.mjs": {
+    "sha256": "e68cd9c4a1147c1be9302b35706dab0ec18cc22ae47758d6c289c5b30abe8bc1",
+    "isolatedSha256": "e68cd9c4a1147c1be9302b35706dab0ec18cc22ae47758d6c289c5b30abe8bc1"
+  },
+  "src/song/fetch_file.py": {
+    "sha256": "d9d1de10144f3c3905054260826d20d56dfa287b30c6c8dac4979f8ff890e2c7",
+    "isolatedSha256": "d9d1de10144f3c3905054260826d20d56dfa287b30c6c8dac4979f8ff890e2c7"
+  },
+  "src/song/separator/model_bs_roformer_ep_317_sdr_12.9755.yaml": {
+    "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f",
+    "isolatedSha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+  },
+  "src/local/templates/asr.mjs": {
+    "sha256": "0fbb83f3352089bb486ffb178e1881beea9706a3b81fd895b8acdffb13adde65",
+    "isolatedSha256": "0fbb83f3352089bb486ffb178e1881beea9706a3b81fd895b8acdffb13adde65"
+  },
+  "src/local/templates/image.mjs": {
+    "sha256": "79fa970b5b8830cf628a1756a67b876b4c9f876b3166ac7f87df58f3a0e1b5ac",
+    "isolatedSha256": "79fa970b5b8830cf628a1756a67b876b4c9f876b3166ac7f87df58f3a0e1b5ac"
+  },
+  "src/local/templates/README-本地接口.md": {
+    "sha256": "f4475bb9054ff63c0789d402c5b2a7d1301596eabca00d28b3dc788327fa37f4",
+    "isolatedSha256": "d50bb9d386edabb7cb86e941f01340ca7f96b4f4602cd5327424ccc0c8d1e78d"
+  },
+  "src/local/templates/song-convert.mjs": {
+    "sha256": "a9c39f4c1f67a8cf256ceb758ba4614bc2fb186bb0bae25f80a3d34acacd603f",
+    "isolatedSha256": "a9c39f4c1f67a8cf256ceb758ba4614bc2fb186bb0bae25f80a3d34acacd603f"
+  },
+  "src/local/templates/tts.mjs": {
+    "sha256": "9fd437c45f8dcb5eb99cbc31848aa71b5878aa2105ecb06e44bc0a3e0bc9c90d",
+    "isolatedSha256": "9fd437c45f8dcb5eb99cbc31848aa71b5878aa2105ecb06e44bc0a3e0bc9c90d"
+  }
+}

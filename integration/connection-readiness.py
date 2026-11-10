@@ -29,7 +29,7 @@ def compare_records(old,new):
  return {'added':len(new.keys()-old.keys()),'removed':len(old.keys()-new.keys()),'changedKnownFieldCounts':{k:v for k,v in fields.items() if k in safe},'changedOtherFields':sum(v for k,v in fields.items() if k not in safe)}
 
 def inspect_known_backups(directory):
- directory=Path(directory);versions=directory/'modules-data/xiyu-self-control/versions'
+ directory=Path(directory);versions=directory/'modules-data/my-agent-self-control/versions'
  result={'comparisonOnly':True,'restorePerformed':False}
  config=json.loads((directory/'config.json').read_text(encoding='utf-8-sig'));selected=config['persona']['current']
  if re.fullmatch(r'[a-zA-Z0-9_-]{1,40}',selected) is None:raise ValueError('invalid persona')

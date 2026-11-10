@@ -6,7 +6,7 @@ export function createRuntimeTransferDrain({ctx,authority,registry,driver,host,s
  function assemble(tasks,sql){
   const agent=agents.status(),hub=host.hub.incomingStatus(),modules=host.modules.transferStatus(),lifecycle=host.transferLifecycle.status()
   const blockers=[]
-  const room=host.modules.use?.('xiyu-room3d')?.transferStatus?.()
+  const room=host.modules.use?.('my-agent-room3d')?.transferStatus?.()
   if(room?.pending)blockers.push('room-command-unconfirmed')
   if(agent.busy||agent.pending)blockers.push('agents-busy')
   if(hub.pending||hub.active||hub.busy||hub.failures)blockers.push('hub-not-drained')

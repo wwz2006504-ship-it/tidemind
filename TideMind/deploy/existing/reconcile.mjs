@@ -10,7 +10,7 @@ const SHADOW = process.env.TIDEMIND_DB; if (!SHADOW) throw new Error('TIDEMIND_D
 
 const QUERIES = [
   'rice',
-  '老爹 生日',
+  '主人 生日',
   '耳朵 录音 麦克风',
   '影子库',
   '服务器 迁移',

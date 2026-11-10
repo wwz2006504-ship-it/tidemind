@@ -26,7 +26,7 @@ class LocalInstallTests(unittest.TestCase):
     def retrieve(agent):
      req=urllib.request.Request('http://127.0.0.1:5197/retrieve',data=json.dumps({'agentId':agent,'query':'麦克风'}).encode(),headers={'Content-Type':'application/json'})
      with urllib.request.urlopen(req,timeout=2) as response:return json.load(response)
-    self.assertGreater(len(retrieve('xiyu')['items']),0);self.assertEqual(retrieve('other')['items'],[])
+    self.assertGreater(len(retrieve('my-agent')['items']),0);self.assertEqual(retrieve('other')['items'],[])
     self.assertEqual(self.command('reconcile',*base)['summary'],{'total':8,'pass':8,'fail':0})
     self.assertTrue(self.command('rollback',*base)['stopped']);self.assertTrue((root/'runtime/memory/memory.db').exists())
     self.assertTrue(self.command('rollback',*base)['stopped']);self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(),before)

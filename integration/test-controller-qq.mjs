@@ -48,7 +48,7 @@ test('unmarked aurabot background input does not trigger memory retrieval or cap
   assert.equal(f.gateway.head(f.lease).revision,prior);assert.equal(f.sent.length,0)
  }finally{await f.cleanup()}
 })
-test('another real controller session cannot read xiyu injected memories or auto-capture',async()=>{
+test('another real controller session cannot read my-agent injected memories or auto-capture',async()=>{
  const f=await controllerQQ();try{
   const prior=f.gateway.head(f.lease).revision
   const created=await f.controller.create({sessionId:'session-unbound-other',cwd:f.root})

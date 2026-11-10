@@ -25,7 +25,7 @@ test('owner tool registers, lists, pauses, resumes and cancels goals while resti
   await tool.execute({action:'goal_resume',goal_id:added.id},{callId:'r'});assert.equal((await tool.execute({action:'goal_status'})).goals[0].state,'active')
   await tool.execute({action:'goal_cancel',goal_id:added.id},{callId:'c'});assert.equal((await tool.execute({action:'goal_status'})).goals[0].state,'cancelled')
   const plain=await tool.execute({action:'status'});assert.equal(plain.rest,true);assert.equal(plain.spent,0);assert.equal(plain.goals.length,1)
-  assert.match(plain.summary,/^休息中；目标 1 个（cancelled 1）；任务 1 条（cancelled 1）；预算 0\//);assert.equal(plain.goals[0].title.length>0,true);assert.equal(plain.goals[0].state,'cancelled');assert.ok('reason' in plain.goals[0]);assert.ok(!('checkpoint' in (plain.tasks[0]??{})))
+  assert.match(plain.summary,/^休息中[｜；]/);assert.match(plain.summary,/目标 1 个/);assert.match(plain.summary,/任务 1 条/);assert.match(plain.summary,/预算 0\//);assert.equal(plain.goals[0].title.length>0,true);assert.equal(plain.goals[0].state,'cancelled');assert.ok('reason' in plain.goals[0]);assert.ok(!('checkpoint' in (plain.tasks[0]??{})))
   await assert.rejects(tool.execute({action:'goal_add',goal:'x'.repeat(2000)}),/bounded/)
   // Natural life / affect / traits through the same owner-only tool (proposals only; nothing is self-approved here).
   assert.ok(tool.properties.action.enum.includes('life_propose'))

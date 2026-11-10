@@ -4,7 +4,7 @@
 
 ## 原系统结构与兼容基线
 
-- 汐羽桌面 profile：`C:\Users\USERNAME\.dsh\profiles\desktop`。真实插件是该 profile 链接的 `dsh-memory-layers 0.1.1`，不是白龙隔离环境的同版本副本。
+- 宿主桌面 profile：`C:\Users\USERNAME\.dsh\profiles\desktop`。真实插件是该 profile 链接的 `dsh-memory-layers 0.1.1`，不是另一套隔离环境里的同版本副本。
 - `.dsh\memory-layers\config.json` 指向 `<MEMORY_LAYERS_DIR>`，配置预算2000、maxResults8。
 - 保留 `memories` / FTS5 trigram `memories_fts`、原索引/触发器、persona/persona_versions。测试schema从现役sqlite_master只读提取，**没有复制记忆或人格正文**。
 - 原检索兼容条件严格锁定：空白分词、长度≥3、OR、BM25、`status='active' AND valid_to IS NULL`。没有把它改成“valid_to尚在未来也注入”。
@@ -77,11 +77,11 @@ ACK丢失或发送中崩溃保持unknown，禁止盲目重发；unknown阻止交
 
 ## 生产仍需补齐的接线
 
-1. 在隔离宿主对齐实际会话/主体映射；xiyu是API逻辑agentId，不假定它就是DSH运行时session ID。
+1. 在隔离宿主对齐实际会话/主体映射；逻辑 agentId 由 TIDEMIND_AGENT_ID 指定，不假定它就是 DSH 运行时 session ID。
 2. 原lmem_*、自动捕获、潮池维护和Aurabot写入路径全部纳入统一提交适配；生产未完成前不能声称旧实例物理写不进。不能让旧流程绕过网关。
 3. 将真实QQ发送收口到唯一可信transport，agent不持有发送凭据或直接发送旁路；对接稳定OneBot事件ID。
 4. 交接ACK必须来自已认证、实际校验数据的副本应用器；当前HTTP没有开放该能力。自动心跳接管监督器、真实Windows关机钩子待实装。
 5. 原store约束（norm_hash、去重/替代链等）需在提交前由原store适配器验证。应用阶段遇约束冲突会停止，不能跳过坏日志；尚无生产日志修复工具。
 6. 云资源可用后验证持久化存储、私有连接、故障重启、还原流程。迁移/付款仍须用户确认。
 
-上述是明确阻塞，不用另一套记忆系统绕过。原人格与原记忆一直保留；**汐羽还是汐羽**。
+上述是明确阻塞，不用另一套记忆系统绕过。原人格与原记忆一直保留；**人格保持原样**。

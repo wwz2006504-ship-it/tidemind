@@ -2,7 +2,7 @@
   "toolExecution": "autonomous",
   "perCallHumanApproval": false,
   "cognitiveTools": "existing",
-  "basis": "2026-11-02 user instruction: tools should act independently; no added tool restrictions",
+  "basis": "Default for this package: tools inside an approved task run without per-call prompting. Change it if your threat model differs.",
   "preserveOriginalMemoryAndPersona": true,
   "singleWriterAndDedup": true,
   "restAndBudget": "unchanged",

@@ -11,10 +11,10 @@ export async function host(seed){
   load('cordis'),load('dsh-system-prompt'),load('dsh-tools'),load('dsh-scope'),import('../host/plugin/src/index.js')])
  const ctx=new Context(),prompt=new SystemPrompt(ctx,{personaPrefix:'SYNTHETIC DEPLOYMENT PERSONA',includeHarnessIdentity:false})
  const tools=new ToolRuntime(ctx,{mode:'native'})
- const sessionId='session-synthetic-xiyu',agent={id:sessionId,turn:0}
+ const sessionId='session-synthetic-my-agent',agent={id:sessionId,turn:0}
  const events=[];agent.session={id:sessionId,header:{origin:'user'},snapshotEvents:()=>events}
  const scoped=scope.createScope(ctx,agent);agent.ctx=scoped.ctx
- fenced.configure({...f,bindings:[{agentId:sessionId,sessionId,logicalAgentId:'xiyu'}]})
+ fenced.configure({...f,bindings:[{agentId:sessionId,sessionId,logicalAgentId:'my-agent'}]})
  plugin.apply(ctx,{dir:f.localDir,enabled:true,injectContext:true,autoCapture:true,autoCaptureMinConfidence:.75,
    tideEnabled:true,dailyBackup:false,logRetrieval:false,injectTokenBudget:2000})
  await fenced.drain()

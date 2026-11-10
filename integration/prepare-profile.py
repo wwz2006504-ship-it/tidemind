@@ -6,7 +6,7 @@ After a new term has been acquired, use the data-preserving handover protocol.
 import argparse,csv,hashlib,json,os,re,subprocess,uuid
 from contextlib import contextmanager
 from pathlib import Path
-BASE=Path('C:/Users/USERNAME/Documents/Codex').resolve()
+BASE=Path(os.environ.get('TIDEMIND_DESKTOP_ROOT') or (Path.home()/'Documents'/'Codex')).resolve()
 PACKAGE=Path(__file__).resolve().parents[1]
 def sha(b):return hashlib.sha256(b).hexdigest()
 def load(p):return json.loads(p.read_text(encoding='utf-8-sig'))

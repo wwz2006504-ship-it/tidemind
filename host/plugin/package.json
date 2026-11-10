@@ -1,1 +1,8 @@
-{"name": "dsh-memory-layers", "version": "0.1.1-isolated-fenced", "type": "module", "main": "src/index.js"}
+{
+  "name": "dsh-memory-layers-isolated",
+  "version": "0.1.1-isolated-fenced",
+  "private": true,
+  "description": "Source-only isolated copy used for hashing/tests. Not an installable replacement for dsh-memory-layers.",
+  "type": "module",
+  "main": "src/index.js"
+}

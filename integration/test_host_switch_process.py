@@ -11,7 +11,7 @@ class HostSwitchTests(unittest.TestCase):
   root=self.fixture();self.assertTrue(switch.prepare(root,True)['dryRun']);self.assertFalse((root/'switch-plan.json').exists())
   before={name:(root/'live'/name).read_bytes() for name in switch.FILES};switch.prepare(root);self.assertTrue(switch.prepare(root)['replayed'])
   self.assertTrue(switch.apply(root,True)['dryRun']);switch.apply(root);self.assertTrue(switch.apply(root)['replayed'])
-  for name in ['memory.db','lease.db','ledger.jsonl','personas/dafeiyu.md']:
+  for name in ['memory.db','lease.db','ledger.jsonl','personas/default.md']:
    p=root/'state'/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b'SYNTHETIC NEW STATE')
   self.assertTrue(switch.rollback(root,True)['dryRun']);switch.rollback(root);self.assertTrue(switch.rollback(root)['replayed'])
   self.assertEqual(before,{name:(root/'live'/name).read_bytes() for name in switch.FILES})

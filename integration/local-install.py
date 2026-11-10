@@ -5,7 +5,7 @@ import argparse,csv,hashlib,io,json,os,re,secrets,shutil,socket,subprocess,sys,t
 from pathlib import Path
 from multiprocessing.connection import Client
 PACKAGE=Path(__file__).resolve().parents[1]
-BASE=Path('C:/Users/USERNAME/Documents/Codex').resolve()
+BASE=Path(os.environ.get('TIDEMIND_DESKTOP_ROOT') or (Path.home()/'Documents'/'Codex')).resolve()
 DEFAULT=BASE/'TideMind-local'
 
 def load(p):return json.loads(p.read_text(encoding='utf-8-sig'))

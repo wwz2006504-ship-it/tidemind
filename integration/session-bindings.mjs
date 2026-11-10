@@ -14,7 +14,7 @@ export function createSessionBindings({readMappings,ownerQQ,resolveRegisteredAge
   if(new Set(rows.map(r=>r.sessionId)).size!==rows.length)throw Error('multiple chats share one original session; review before binding')
   return rows
  }
- function sync(){const rows=reviewed();bindings.splice(0,bindings.length,...rows.map(r=>({agentId:r.sessionId,sessionId:r.sessionId,logicalAgentId:'xiyu'})));return rows}
+ function sync(){const rows=reviewed();bindings.splice(0,bindings.length,...rows.map(r=>({agentId:r.sessionId,sessionId:r.sessionId,logicalAgentId:'my-agent'})));return rows}
  sync()
  return Object.freeze({bindings,ownerChatId:'private:'+ownerQQ,
   ownerSessionId(){const row=sync().find(r=>r.chatId==='private:'+ownerQQ);if(!row)throw Error('original owner session missing');return row.sessionId},

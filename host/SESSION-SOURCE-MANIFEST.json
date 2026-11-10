@@ -1,0 +1,70 @@
+{
+  "dsh-session": {
+    "version": "0.2.1-rc.2",
+    "sha256": "2f5dd07cb5c744a29abbb8003a8a4cefd9e582c6e2538074ca299a0ddd02a3bf"
+  },
+  "dsh-agent-loop": {
+    "version": "0.2.1-rc.2",
+    "sha256": "cf57e3ecd487ac5c2553455aaa5cef2c6fb41e6bd61be5aa455675d1d7193033"
+  },
+  "dsh-session-persistence": {
+    "version": "0.2.1-rc.2",
+    "sha256": "cc0b6d3a224133af611b428d5a49020e300f86c3b4ba28037aeb219029bde3eb"
+  },
+  "dsh-session-persistence-jsonl": {
+    "version": "0.2.1-rc.2",
+    "sha256": "973dd78679b2661d6f492343bc22b124ae958aa597d3b36c698a2c650f909984"
+  },
+  "cordis": {
+    "version": "4.0.5",
+    "sha256": "6a9394c0877ff45218818c6e815edd038f8057e1a1deb390a8d43ec81c57691e"
+  },
+  "dsh-typert-registry": {
+    "version": "0.2.1-rc.2",
+    "sha256": "ea5e3beb6ddd09a7b77e6fc79933f71ba93382d0ec1caa70bd1f92c904caccdd"
+  },
+  "dsh-agent": {
+    "version": "0.2.1-rc.2",
+    "sha256": "7b59cf82c2784c25bdce4e3e24e5e5303b02b9f1003efacf50255492d17baf8b"
+  },
+  "dsh-llm": {
+    "version": "0.2.1-rc.2",
+    "sha256": "d18d8ae4c8d961e628708c1e4698e09716a0ebb80e55a672e0bde1029bec1155"
+  },
+  "dsh-system-prompt": {
+    "version": "0.2.1-rc.2",
+    "sha256": "7be9f7aafbf345d01ddcc12fd297b16e9a1d41283a6a04073b867becca0bf020"
+  },
+  "dsh-tools": {
+    "version": "0.2.1-rc.2",
+    "sha256": "1e53932e7c4213ea24a7d87f06960b7a7702cb21f8a5741c97242b4a470a442a"
+  },
+  "dsh-session-query": {
+    "version": "0.2.1-rc.2",
+    "sha256": "76ce2944e561c12f48b5e240d68cafe54ce6d667b1d20722e6939ed834489939"
+  },
+  "dsh-api-session-controller": {
+    "version": "0.2.1-rc.2",
+    "sha256": "a9801acb577b03053c5d5a3191ff555c5f1d791d0acddec113bea4511e33b386"
+  },
+  "dsh-session-projection": {
+    "version": "0.2.1-rc.2",
+    "sha256": "7dc2b212819baf4fc292751054d30b97afcbdee0a4733230abf92c6722e6550c"
+  },
+  "cordis-plugin-timer": {
+    "version": "1.1.7",
+    "sha256": "aab5832ebcefccd223b16ff3e8f09ca611841f53352c8439ea3acf7cc11ad002"
+  },
+  "dsh-persona": {
+    "version": "0.2.1-rc.2",
+    "sha256": "1e9dd7f0dfd87cbff6486b7ca043d2e1b863a2a56b99106a4bf74831591266d5"
+  },
+  "cordis-plugin-loader": {
+    "version": "1.0.6",
+    "sha256": "638b9ad360e01236120772323f80a65570c4f3f42f4cfc6243330241025b6d72"
+  },
+  "dsh-agent-preset-registry": {
+    "version": "0.2.1-rc.2",
+    "sha256": "95edcc66175a87091ba90fe0809246821df470bf960e1cfd725b5ca6baaf4f07"
+  }
+}

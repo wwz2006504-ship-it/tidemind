@@ -56,7 +56,7 @@ for(;pages<100;){
   if(!oldest||row.time<oldest.time||row.time===oldest.time&&row.message_seq<oldest.message_seq)oldest=row
   if(!records.has(id)){
    const text=row.message.filter(part=>part.type==='text'&&typeof part.data?.text==='string').map(part=>part.data.text).join('')
-   records.set(id,{id,seq:row.message_seq,time:row.time,from:sender===botId?'xiyu':'owner',text})
+   records.set(id,{id,seq:row.message_seq,time:row.time,from:sender===botId?'my-agent':'owner',text})
    added++
   }
  }

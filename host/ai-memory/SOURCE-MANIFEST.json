@@ -1,0 +1,42 @@
+{
+  "attention.js": {
+    "sha256": "68cfe6d47930e4736e1e7fadd4b8b892b1d84fb74850fe4009d475c032a9889f",
+    "isolatedSha256": "68cfe6d47930e4736e1e7fadd4b8b892b1d84fb74850fe4009d475c032a9889f"
+  },
+  "graph.js": {
+    "sha256": "a8506d030c6ba8b4a3ba0045f8dcd045bfbc8826119bf467cf791904979f2b33",
+    "isolatedSha256": "a8506d030c6ba8b4a3ba0045f8dcd045bfbc8826119bf467cf791904979f2b33"
+  },
+  "index.js": {
+    "sha256": "55298543fcfad63530b97190ce0a00754bfbfd0f1bf0b3ca333a565eb247ae7d",
+    "isolatedSha256": "231afde062ca671e06e04e8c204ab3bba743d06d563949681ed13b70a28e9cd0"
+  },
+  "label.js": {
+    "sha256": "5253c817d96ed27d76743d3c2678d1395ebfb8eb6ebdeb486e874ae126a99083",
+    "isolatedSha256": "5253c817d96ed27d76743d3c2678d1395ebfb8eb6ebdeb486e874ae126a99083"
+  },
+  "ledger.js": {
+    "sha256": "b88937269f60df52120e4f3defbb19e266cb87eb8dc04e21e1ec664658183789",
+    "isolatedSha256": "b88937269f60df52120e4f3defbb19e266cb87eb8dc04e21e1ec664658183789"
+  },
+  "query.js": {
+    "sha256": "fe8bdee17fe9a183240e16de9e7c2e37443dd3eb17c98ea39e959737ba7cc73a",
+    "isolatedSha256": "fe8bdee17fe9a183240e16de9e7c2e37443dd3eb17c98ea39e959737ba7cc73a"
+  },
+  "routes.js": {
+    "sha256": "853d9142e6398a6a61ba5e535ca2927e208c94dbc186b19e6e727c54773201dd",
+    "isolatedSha256": "853d9142e6398a6a61ba5e535ca2927e208c94dbc186b19e6e727c54773201dd"
+  },
+  "store.js": {
+    "sha256": "1afa819498187fbb1f1e5dffbba2e689383f020287a40ac85dabc5cb1418dafa",
+    "isolatedSha256": "1afa819498187fbb1f1e5dffbba2e689383f020287a40ac85dabc5cb1418dafa"
+  },
+  "supersede.js": {
+    "sha256": "0fe76002153236b38dc9a03e5f69152deb2298113e550d04a97f59391f903c51",
+    "isolatedSha256": "0fe76002153236b38dc9a03e5f69152deb2298113e550d04a97f59391f903c51"
+  },
+  "tools.js": {
+    "sha256": "93d104220d74895ac768dfc1847952bed815c87c60bf36ef16fc5e2f7b040a82",
+    "isolatedSha256": "93d104220d74895ac768dfc1847952bed815c87c60bf36ef16fc5e2f7b040a82"
+  }
+}

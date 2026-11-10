@@ -1,16 +1,16 @@
 {
   "lease.mjs": {
-    "source": "C:\\Users\\USERNAME\\Aurabot\\qq-chats\\tidemind-shadow\\lease.mjs",
+    "source": "<ORIGIN_DIR>\\lease.mjs",
     "sha256": "65c430e9e05a594e8e6f13906a58b0d5d2a56307d644e2e2e44e2b60490c52e5",
     "revised_sha256": "a0bbf80d97cbecf2e973f609e3207abd0e4518afb5d26348c439a64ac42b0a4d"
   },
   "reconcile.mjs": {
-    "source": "C:\\Users\\USERNAME\\Aurabot\\qq-chats\\tidemind-shadow\\reconcile.mjs",
+    "source": "<ORIGIN_DIR>\\reconcile.mjs",
     "sha256": "f9a52ef4852d34ab21f54c61ea31c009b0278c47bc4e439de2a50622507e0651",
     "revised_sha256": "8f64eafe03ebc2d314c6c45795e5596f0ab3c9184a28e986c388a38f2bc7d7c9"
   },
   "tidemind-api.mjs": {
-    "source": "C:\\Users\\USERNAME\\Aurabot\\qq-chats\\tidemind-shadow\\tidemind-api.mjs",
+    "source": "<ORIGIN_DIR>\\tidemind-api.mjs",
     "sha256": "4f12c6893b59fa74108471eaa47da9471eff35a69ce589f276cd5e1ede9b0f28",
     "revised_sha256": "deaa36d62e2c84067d4429293e521729d19b4fe64be76de35be92ee9c208bf2e"
   }

@@ -7,7 +7,7 @@ ENTRY=ROOT/'deploy/existing'
 class EntryTests(unittest.TestCase):
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name)
-  self.env=dict(os.environ,TIDEMIND_SANDBOX_ROOT=str(self.root),TIDEMIND_LEASE_DB=str(self.root/'lease.db'),TIDEMIND_DB=str(self.root/'shadow.db'),TIDEMIND_LIVE_DB=str(self.root/'live.db'),TIDEMIND_REPORT=str(self.root/'report.json'))
+  self.env=dict(os.environ,TIDEMIND_AGENT_ID='my-agent',TIDEMIND_SANDBOX_ROOT=str(self.root),TIDEMIND_LEASE_DB=str(self.root/'lease.db'),TIDEMIND_DB=str(self.root/'shadow.db'),TIDEMIND_LIVE_DB=str(self.root/'live.db'),TIDEMIND_REPORT=str(self.root/'report.json'))
  def tearDown(self):self.tmp.cleanup()
  def run_node(self,name,*args):
   r=subprocess.run(['node',str(ENTRY/name),*args],env=self.env,capture_output=True,text=True,encoding="utf-8",check=True)
@@ -52,13 +52,13 @@ class EntryTests(unittest.TestCase):
    for _ in range(100):
     try:request({});break
     except OSError:time.sleep(.02)
-   self.assertEqual(len(request({'agentId':'xiyu','query':'服务器'})['items']),1)
+   self.assertEqual(len(request({'agentId':'my-agent','query':'服务器'})['items']),1)
    self.assertEqual(request({'agentId':'other','query':'服务器'})['items'],[])
-   self.assertEqual(request({'agentId':'xiyu','query':''})['items'],[])
-   self.assertEqual(request({'agentId':'xiyu','query':'服务器','history':1})['items'],[])
+   self.assertEqual(request({'agentId':'my-agent','query':''})['items'],[])
+   self.assertEqual(request({'agentId':'my-agent','query':'服务器','history':1})['items'],[])
    self.assertEqual(request(None)['items'],[])
    Path(self.env['TIDEMIND_DB']).rename(self.root/'away.db')
-   self.assertEqual(request({'agentId':'xiyu','query':'服务器'})['items'],[])
+   self.assertEqual(request({'agentId':'my-agent','query':'服务器'})['items'],[])
   finally:child.terminate();child.wait(timeout=5)
  def test_compose_rejects_bind_mount(self):
   source=ROOT/'deploy/compose.yaml';self.assertIn('PASS',check_compose(source))

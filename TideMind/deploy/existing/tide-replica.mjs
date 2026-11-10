@@ -5,13 +5,29 @@ import {DatabaseSync} from 'node:sqlite'
 import {resolve,relative,isAbsolute,dirname} from 'node:path'
 import {existsSync,realpathSync} from 'node:fs'
 import {hash} from './tide-gateway.mjs'
+// Live directories that must never be written to. Configure TIDEMIND_PROTECTED_DIRS
+// (;-separated on Windows, :-separated elsewhere); unset only warns once.
+export function protectedDirs() {
+ const raw=String(process.env.TIDEMIND_PROTECTED_DIRS||'')
+ const out=[]
+ for (const entry of raw.split(process.platform==='win32'?';':':')) {
+  const trimmed=entry.trim()
+  if (!trimmed) continue
+  try { out.push(realpathSync(resolve(trimmed))) } catch { /* not present on this machine */ }
+ }
+ if (!out.length && !globalThis.__tideProtectedWarned) {
+  globalThis.__tideProtectedWarned=true
+  console.warn('[tidemind] TIDEMIND_PROTECTED_DIRS is unset; only the sandbox containment check is active')
+ }
+ return out
+}
 export function checkedPath(file,root=process.env.TIDEMIND_SANDBOX_ROOT) {
  if(!root)throw new Error('isolated root required')
  const canonical=existsSync(file)?realpathSync(file):resolve(realpathSync(dirname(file)),file.split(/[\\/]/).pop())
  const rel=relative(realpathSync(root),canonical)
  if(!rel||rel.startsWith('..')||isAbsolute(rel))throw new Error('outside isolated root')
- for(const protectedRoot of ['<MEMORY_LAYERS_DIR>','C:/Users/USERNAME/.dsh/memory-layers','C:/Users/USERNAME/Aurabot/qq-chats/tidemind-shadow','<MEMORY_LAYERS_DIR_2>']) {
-  const p=relative(resolve(protectedRoot),canonical)
+ for(const protectedRoot of protectedDirs()) {
+  const p=relative(protectedRoot,canonical)
   if(!p||(!p.startsWith('..')&&!isAbsolute(p)))throw new Error('production/shadow write prohibited')
  }
  return canonical

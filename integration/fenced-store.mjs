@@ -11,7 +11,7 @@ import {MemoryStore as Original} from '../host/plugin/src/store.js'
 const scope=new AsyncLocalStorage();let runtime
 export function configure(value){runtime=value;runtime.timers=new Map();runtime.maintenanceCounter=0;runtime.invalidate=()=>{};runtime.operationCounter=0}
 export function useSessionBindings(registry){if(!runtime||!Array.isArray(registry?.bindings)||typeof registry.authorize!=='function')throw Error('configured host session registry required');registry.inspect();runtime.bindings=registry.bindings}
-export function allowedAgent(agent){return Boolean(agent&&runtime?.bindings?.some(b=>b.agentId===agent.id&&b.sessionId===agent.session?.id&&b.logicalAgentId==='xiyu'))}
+export function allowedAgent(agent){return Boolean(agent&&runtime?.bindings?.some(b=>b.agentId===agent.id&&b.sessionId===agent.session?.id&&b.logicalAgentId==='my-agent'))}
 export function bindAgent(agent,meta,fn){
  assertCognitiveActive()
  if(!allowedAgent(agent))throw new Error('agent/session mapping not authorized')

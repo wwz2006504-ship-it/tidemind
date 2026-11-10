@@ -3,7 +3,7 @@ if (process.argv.includes('--dry-run')) { console.log(JSON.stringify({dryRun:tru
 // 目标：给「检索入口」一个可验证的最小实现，远端 Hetzner 没开通前在 localhost 先跑。
 // 约束：
 //   - 只读打开影子库，任何写操作都不在代码里出现
-//   - 只服务 agentId = xiyu；别的 agentId 一律空结果（不是报错，避免阻塞聊天）
+//   - 只服务 TIDEMIND_AGENT_ID 指定的那个 agentId；别的 agentId 一律空结果（不是报错，避免阻塞聊天）
 //   - 默认不返回 valid_to 已过期的记录；带 history=1 且有权时才会搜历史
 //   - 出错一律返回空记忆，不抛给调用方
 import { createServer } from 'node:http'
@@ -12,18 +12,32 @@ import { DatabaseSync } from 'node:sqlite'
 
 const PORT = Number(process.env.TIDEMIND_PORT || 5180)
 const DB = process.env.TIDEMIND_DB || (() => {throw new Error('TIDEMIND_DB required')})()
-const ALLOWED_AGENT = 'xiyu'
+// The single logical agent this read-only service answers. Required: no default, so a
+// stranger's install cannot silently answer the author's agent id.
+const ALLOWED_AGENT = String(process.env.TIDEMIND_AGENT_ID || '').trim()
+if (!ALLOWED_AGENT) {
+  console.error('TIDEMIND_AGENT_ID is required (the one agent id this service may answer)')
+  process.exit(2)
+}
 
 function openRO() {
   return new DatabaseSync(DB, { readOnly: true })
 }
 
+// Trigram FTS5: a token shorter than 3 characters cannot match, and a long CJK sentence is a
+// single whitespace token, so it would only match when quoted verbatim. Emit 3-character
+// windows for CJK runs instead, which keeps recall usable without touching the index.
 function terms(q) {
-  return String(q || '')
-    .split(/\s+/)
-    .map((t) => t.trim())
-    .filter((t) => t.length >= 3)
-    .slice(0, 16)
+  const raw = String(q || '').split(/\s+/).map((t) => t.trim()).filter(Boolean)
+  const out = []
+  for (const token of raw) {
+    const chars = [...token]
+    if (/[\u3400-\u9fff\uf900-\ufaff\u3040-\u30ff\uac00-\ud7af]/.test(token)) {
+      if (chars.length === 3) out.push(token)
+      else if (chars.length > 3) for (let i = 0; i + 3 <= chars.length; i++) out.push(chars.slice(i, i + 3).join(''))
+    } else if (token.length >= 3) out.push(token)
+  }
+  return [...new Set(out)].slice(0, 16)
 }
 
 function retrieve({ agentId, query, limit = 6, history = 0 }) {

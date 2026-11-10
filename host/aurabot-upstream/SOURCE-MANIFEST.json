@@ -1,0 +1,250 @@
+{
+  "host.js": {
+    "sha256": "0e4df85716d7c0b8e19d96ab2b49f26cbf8e2f7c0bdee75600b05cf16fc92da5",
+    "isolatedSha256": "3bfec1c63e598f4ba485a38c13a2b5ffa01d02e83fe07b034ac6c1399608d16a"
+  },
+  "bili/api.js": {
+    "sha256": "d2f1c105d7b1d036e61c51cc6b15bf2e626f98fc2439c7071040ff41cce48012",
+    "isolatedSha256": "d2f1c105d7b1d036e61c51cc6b15bf2e626f98fc2439c7071040ff41cce48012"
+  },
+  "bili/duty.js": {
+    "sha256": "c9d3d86cf188983a31a9baed7ce87da3028bda8fbfe7222669357cabf6cda880",
+    "isolatedSha256": "03151935ccd81dcf56878e8cc0d6076a8ec7aef2ac8f74d0501c7b2829e497ee"
+  },
+  "chat/access.js": {
+    "sha256": "27105d9b670ad84a0038f354262ef97e13f41473cff8bfb983b4359c48ad7476",
+    "isolatedSha256": "27105d9b670ad84a0038f354262ef97e13f41473cff8bfb983b4359c48ad7476"
+  },
+  "chat/commands.js": {
+    "sha256": "1966d3096c9dfc19ce7c7e3637ecf6f6d1e2234c3c52a24bbc1afa2f6792ec33",
+    "isolatedSha256": "1966d3096c9dfc19ce7c7e3637ecf6f6d1e2234c3c52a24bbc1afa2f6792ec33"
+  },
+  "chat/group-policy.js": {
+    "sha256": "76bb2c8994f07f16030225a32d65201033fc5925bf139fabc1a3250e2e70beda",
+    "isolatedSha256": "4f0dedbc2b9d98cfe2d7b2220fa71ad1ba46c0f7b70135ba870e0c9f39aaaf06"
+  },
+  "chat/group-roles.js": {
+    "sha256": "577ce1753e046a2a3c49aca582f30195322e770f4642216edfd05259d575edbe",
+    "isolatedSha256": "577ce1753e046a2a3c49aca582f30195322e770f4642216edfd05259d575edbe"
+  },
+  "chat/hub.js": {
+    "sha256": "3aee49765074a2cdb3fa4c8c1fdc7c218ba4fb4c782809a28b4414a579698ac2",
+    "isolatedSha256": "3aee49765074a2cdb3fa4c8c1fdc7c218ba4fb4c782809a28b4414a579698ac2"
+  },
+  "chat/inbound.js": {
+    "sha256": "70c75cd63837b4de82d13e80fdf548fdef15a7ad552ed2189db226d7f3ba9c57",
+    "isolatedSha256": "70c75cd63837b4de82d13e80fdf548fdef15a7ad552ed2189db226d7f3ba9c57"
+  },
+  "chat/reply.js": {
+    "sha256": "ef0e642ed4506ab7dbdc25886df0f2b7bd2a9a697e2078db24ff29c153593f5d",
+    "isolatedSha256": "fefe60af3c5a7998d362022d0d99c1d43208b35cdfafc22ba218e9a0a29728f2"
+  },
+  "core/bridge.js": {
+    "sha256": "131ce58963cd7414be1814db061f38614a92f3094b72f50ed818176f9e5e5940",
+    "isolatedSha256": "9ee6a6f6c3b78f44b7508221377c8686344707c2d6e6f0b02db02a335c453768"
+  },
+  "core/config.js": {
+    "sha256": "1edbf60084878811e1682bec729dfe73efb13f830627bf9a98881905761481b7",
+    "isolatedSha256": "5f3c9195340242c88749deb387d594e72a783c29502724a5d47e3d1588e06572"
+  },
+  "core/llm.js": {
+    "sha256": "2fccb01a87c374cbcc32ca1d51d42b73147372757b9a1c38b1f63dbc3217870f",
+    "isolatedSha256": "2fccb01a87c374cbcc32ca1d51d42b73147372757b9a1c38b1f63dbc3217870f"
+  },
+  "core/logger.js": {
+    "sha256": "461aa96c7238d7ee6448e61578c12344f7e9bc6ef32d8c8cb77fa553db8ac2a3",
+    "isolatedSha256": "461aa96c7238d7ee6448e61578c12344f7e9bc6ef32d8c8cb77fa553db8ac2a3"
+  },
+  "core/modules.js": {
+    "sha256": "817200271195eeee9a5f136253aada28a6666f234673526a5741f74e0e887f0e",
+    "isolatedSha256": "1a4533f65e8bcee47e64897e92068459cfa349d320876581c9ece9e7f23f0ba7"
+  },
+  "core/net.js": {
+    "sha256": "732b932dd876a7a56ab009a6adfedcaf5f62332b85361375c5152d7ca22526a9",
+    "isolatedSha256": "732b932dd876a7a56ab009a6adfedcaf5f62332b85361375c5152d7ca22526a9"
+  },
+  "core/redact.js": {
+    "sha256": "d89af9f37897a4247aeda2ea48bb682a144ccf639a817e3911a828a9c3b5a0e5",
+    "isolatedSha256": "d89af9f37897a4247aeda2ea48bb682a144ccf639a817e3911a828a9c3b5a0e5"
+  },
+  "core/store.js": {
+    "sha256": "5ea1c67bfe7c0f48e492612e79496a2d48fc1d8f3c1f793e0d5a6a579f6d632e",
+    "isolatedSha256": "5ea1c67bfe7c0f48e492612e79496a2d48fc1d8f3c1f793e0d5a6a579f6d632e"
+  },
+  "core/update.js": {
+    "sha256": "ae3c74eb9f42fe3236b61fa7fed861c002f93fd66ea1d5d64fa7ea32a196adeb",
+    "isolatedSha256": "ae3c74eb9f42fe3236b61fa7fed861c002f93fd66ea1d5d64fa7ea32a196adeb"
+  },
+  "features/companion.js": {
+    "sha256": "13c04add227f168b6f0489c74802ab92a2a995dda27813e52aa5a4d4c694f0f4",
+    "isolatedSha256": "016bb497105d5941198c9c2b6e5359f66ae5b194bbb0c636105ca7ea24013d59"
+  },
+  "features/imagegen.js": {
+    "sha256": "c4cf4bed56fd72cb8d4c18bc14d3ae5a7ccc7ca70d80ff26bf73b743b64a1bba",
+    "isolatedSha256": "c4cf4bed56fd72cb8d4c18bc14d3ae5a7ccc7ca70d80ff26bf73b743b64a1bba"
+  },
+  "features/mem-brief.mjs": {
+    "sha256": "cef551e35b9eba3c08b870ac77c0863fb882a5cfa92a4ad605cd20572f3a1ba8",
+    "isolatedSha256": "cef551e35b9eba3c08b870ac77c0863fb882a5cfa92a4ad605cd20572f3a1ba8"
+  },
+  "features/memories.js": {
+    "sha256": "1838590f3eba1d0cbf3e5873de2aa138e56d73ad41211efc5e179ce9553c596e",
+    "isolatedSha256": "d43c0c703f5fffd872764c4d2661321967f045d2f2ea944b9855123be1c09b34"
+  },
+  "features/memory.js": {
+    "sha256": "8f64dd61dccdbcdf65fe3888e1819bf5bb37de8a0c04daf9952aab1b84b2a81b",
+    "isolatedSha256": "a5766b999a337fdbb3d9d64b98f86b3dc9fffeea2232a9a9efcfaf4ae339a9b5"
+  },
+  "features/pet.js": {
+    "sha256": "2fb4c39ac72f8aace1f182ca046194f3d1637d2d4cdfc46ae8595598405c9d82",
+    "isolatedSha256": "2fb4c39ac72f8aace1f182ca046194f3d1637d2d4cdfc46ae8595598405c9d82"
+  },
+  "features/phone.js": {
+    "sha256": "64480f85691ff5fa6605c85a373c307e477467b65e5d806446130c0221765724",
+    "isolatedSha256": "b8477ef9967746ccb055d4d6e8bc14187e32ff5b736b3b5e11d88d2b0932571a"
+  },
+  "features/qzone-social.js": {
+    "sha256": "efa4b173f725451135974460c15fdb319100747a70faaf19f0e3d1558b018b89",
+    "isolatedSha256": "efa4b173f725451135974460c15fdb319100747a70faaf19f0e3d1558b018b89"
+  },
+  "features/qzone.js": {
+    "sha256": "a825bc2c936c5bac3cde72e3ef3bde2b2894e44a661b839a45f5d7d1d46ee9fb",
+    "isolatedSha256": "8ac22e7df0ac14d8774604f286ddad92fc5c57952a44a8c5b397a096f6dc5df9"
+  },
+  "features/screen.js": {
+    "sha256": "514b261057f92f92ea596aa8956495ad8ae122b84ff30b44cd620672bf066965",
+    "isolatedSha256": "514b261057f92f92ea596aa8956495ad8ae122b84ff30b44cd620672bf066965"
+  },
+  "features/stickers.js": {
+    "sha256": "5f0751fc9f63528d3fc2310941871e45f57c55d78395e7f7b2ba7a88664a91c5",
+    "isolatedSha256": "5f0751fc9f63528d3fc2310941871e45f57c55d78395e7f7b2ba7a88664a91c5"
+  },
+  "features/vision.js": {
+    "sha256": "c546644d5a04652e7bdf9564455c8e8f6837f60a2d08dfd4b07829f894ce5e00",
+    "isolatedSha256": "c546644d5a04652e7bdf9564455c8e8f6837f60a2d08dfd4b07829f894ce5e00"
+  },
+  "local/local.js": {
+    "sha256": "828e9e69fab175eb4b52f19e32c86383569aa62b24173888f3ff5793039d74cb",
+    "isolatedSha256": "9039f27a5688b33a1aaaaf77bb468ae8df55fd16abf8130e839f8b4116295b27"
+  },
+  "local/templates/asr.mjs": {
+    "sha256": "0fbb83f3352089bb486ffb178e1881beea9706a3b81fd895b8acdffb13adde65",
+    "isolatedSha256": "0fbb83f3352089bb486ffb178e1881beea9706a3b81fd895b8acdffb13adde65"
+  },
+  "local/templates/image.mjs": {
+    "sha256": "79fa970b5b8830cf628a1756a67b876b4c9f876b3166ac7f87df58f3a0e1b5ac",
+    "isolatedSha256": "79fa970b5b8830cf628a1756a67b876b4c9f876b3166ac7f87df58f3a0e1b5ac"
+  },
+  "local/templates/song-convert.mjs": {
+    "sha256": "a9c39f4c1f67a8cf256ceb758ba4614bc2fb186bb0bae25f80a3d34acacd603f",
+    "isolatedSha256": "a9c39f4c1f67a8cf256ceb758ba4614bc2fb186bb0bae25f80a3d34acacd603f"
+  },
+  "local/templates/tts.mjs": {
+    "sha256": "9fd437c45f8dcb5eb99cbc31848aa71b5878aa2105ecb06e44bc0a3e0bc9c90d",
+    "isolatedSha256": "9fd437c45f8dcb5eb99cbc31848aa71b5878aa2105ecb06e44bc0a3e0bc9c90d"
+  },
+  "modules/index.js": {
+    "sha256": "6f153c8f6cfdb6a5ff97723818cec8c59bbaf0953331920896ddca3d7362ba9a",
+    "isolatedSha256": "6f153c8f6cfdb6a5ff97723818cec8c59bbaf0953331920896ddca3d7362ba9a"
+  },
+  "modules/bili/index.js": {
+    "sha256": "02175f76673504d49674c2c20c115e616f731b7b1d06fc09b2601dfbbf03e960",
+    "isolatedSha256": "02175f76673504d49674c2c20c115e616f731b7b1d06fc09b2601dfbbf03e960"
+  },
+  "modules/diary/index.js": {
+    "sha256": "0039fca8d464d528009d0f2a374397f193d40f70c57d65fc3596420719f964bd",
+    "isolatedSha256": "0039fca8d464d528009d0f2a374397f193d40f70c57d65fc3596420719f964bd"
+  },
+  "modules/group-admin/index.js": {
+    "sha256": "06261531667f04069dfce9ad45a42a8262ce2929efa9d8a3afc415be7bce639b",
+    "isolatedSha256": "06261531667f04069dfce9ad45a42a8262ce2929efa9d8a3afc415be7bce639b"
+  },
+  "modules/imagegen/index.js": {
+    "sha256": "97784cc0ebff0dc234184163cedc61f15aa40baf9f9d556903592fb0e5521241",
+    "isolatedSha256": "97784cc0ebff0dc234184163cedc61f15aa40baf9f9d556903592fb0e5521241"
+  },
+  "modules/memory/index.js": {
+    "sha256": "3e903953add1c8fc7936de523a42897c5d8c4b1a80826013a471c70fe477a402",
+    "isolatedSha256": "3e903953add1c8fc7936de523a42897c5d8c4b1a80826013a471c70fe477a402"
+  },
+  "modules/mood/index.js": {
+    "sha256": "e32e08f0a22f2e845df582e140280c6495fae37484a8587ec513ab7344712a05",
+    "isolatedSha256": "e32e08f0a22f2e845df582e140280c6495fae37484a8587ec513ab7344712a05"
+  },
+  "modules/persona-self/index.js": {
+    "sha256": "8a2d4f7b5b1bcf218c277adbd5ad12383d08a169920928952551a8f462787918",
+    "isolatedSha256": "49a15787e66a145b3dcb9a4e7839537fc0972c02ff59587cc4e20c8641d138e5"
+  },
+  "modules/pet-link/index.js": {
+    "sha256": "3f2d919f9a46ebbd7a1394d1c9b1d889b9fd019bd403fc64cb3d271944feba1d",
+    "isolatedSha256": "3f2d919f9a46ebbd7a1394d1c9b1d889b9fd019bd403fc64cb3d271944feba1d"
+  },
+  "modules/phone/index.js": {
+    "sha256": "c7099c02da5c0e4ce32421a5da5d7c7d7687f46f007997899c9ad15c5af721d5",
+    "isolatedSha256": "0dd09f7cf31dd6eb6cfaca1b7a81d0f06aa963174c0a8c031dd1f3af40f79a51"
+  },
+  "modules/qq-tools/index.js": {
+    "sha256": "fc4f53e58a986b2bedc9d3aaa4ca00c9d4aa07cbbe2dc42e029d46694bb1bc67",
+    "isolatedSha256": "fc4f53e58a986b2bedc9d3aaa4ca00c9d4aa07cbbe2dc42e029d46694bb1bc67"
+  },
+  "modules/qzone-social/index.js": {
+    "sha256": "f131adfe8b95fa24741ff2d584950a853f6cf7a805eea6f4024819dd3ab9e185",
+    "isolatedSha256": "f131adfe8b95fa24741ff2d584950a853f6cf7a805eea6f4024819dd3ab9e185"
+  },
+  "modules/song/index.js": {
+    "sha256": "cd1a9f99b93cc0c884645e8301127af308a4040b76bb6f18db9577b8409b7fd0",
+    "isolatedSha256": "cd1a9f99b93cc0c884645e8301127af308a4040b76bb6f18db9577b8409b7fd0"
+  },
+  "modules/speakup/index.js": {
+    "sha256": "fb7b78fe31dfb4e467a0aa0cfbc8fc2d7b978e84939ea6b5de54ad16eab1235f",
+    "isolatedSha256": "fb7b78fe31dfb4e467a0aa0cfbc8fc2d7b978e84939ea6b5de54ad16eab1235f"
+  },
+  "modules/stickers/index.js": {
+    "sha256": "95e86411592c46bda5d38e706aabe82c963c7e4e4c42d75f449ce2eecbbb5569",
+    "isolatedSha256": "95e86411592c46bda5d38e706aabe82c963c7e4e4c42d75f449ce2eecbbb5569"
+  },
+  "modules/voice/index.js": {
+    "sha256": "02b7780aab6458e8035930d1a7bf50c917930378d3a2773be2369a466baa8f0a",
+    "isolatedSha256": "e32dabf36d854c616704ff92ab28d01009ecb58d945869de2657a44792d42f91"
+  },
+  "modules/_template/index.mjs": {
+    "sha256": "e68cd9c4a1147c1be9302b35706dab0ec18cc22ae47758d6c289c5b30abe8bc1",
+    "isolatedSha256": "e68cd9c4a1147c1be9302b35706dab0ec18cc22ae47758d6c289c5b30abe8bc1"
+  },
+  "onebot/client.js": {
+    "sha256": "6bcda3b2ccea65b1e1f2ea70fa6d55d8384476f86b63184823309d8a63f8252e",
+    "isolatedSha256": "6bcda3b2ccea65b1e1f2ea70fa6d55d8384476f86b63184823309d8a63f8252e"
+  },
+  "persona/personas.js": {
+    "sha256": "7903ecaf4c37f68d12b61c89edf9d6c5580bec0dbaba421c5b2cc455221e82aa",
+    "isolatedSha256": "4f8ba37e4177d84709ba75a568026ebc1d2866d6c48beb22425ce9189dc1b8be"
+  },
+  "snowluma/manager.js": {
+    "sha256": "506bf8e4855a12deb22e7b20a1daf330927ce6ece40955ea7f84c03d1500e218",
+    "isolatedSha256": "506bf8e4855a12deb22e7b20a1daf330927ce6ece40955ea7f84c03d1500e218"
+  },
+  "song/netease.js": {
+    "sha256": "041a521c787e017684d299897f1a4f08d9e2cc4bfa9d9ca40e91952c438bb3fb",
+    "isolatedSha256": "041a521c787e017684d299897f1a4f08d9e2cc4bfa9d9ca40e91952c438bb3fb"
+  },
+  "song/studio.js": {
+    "sha256": "1889a558f23b973ad7f388f36c6ee551dd3dee0a5d9432edd49528f74b78e1eb",
+    "isolatedSha256": "1889a558f23b973ad7f388f36c6ee551dd3dee0a5d9432edd49528f74b78e1eb"
+  },
+  "song/zip.js": {
+    "sha256": "68d95e51acb79e244cdbdd7e7769140de2bf8927b349a67a7370d53ff521304c",
+    "isolatedSha256": "68d95e51acb79e244cdbdd7e7769140de2bf8927b349a67a7370d53ff521304c"
+  },
+  "tools/tools.js": {
+    "sha256": "d595ff53469693172e7ce345f6edde624d9cd346cc119535f888175dd2893e7e",
+    "isolatedSha256": "d595ff53469693172e7ce345f6edde624d9cd346cc119535f888175dd2893e7e"
+  },
+  "voice/tts.js": {
+    "sha256": "178ec0c34369e983711b0ad46bad6841aaf735f3fc51916ab852f9b3f447e1c1",
+    "isolatedSha256": "178ec0c34369e983711b0ad46bad6841aaf735f3fc51916ab852f9b3f447e1c1"
+  },
+  "voice/wav.js": {
+    "sha256": "428852cc141db0f785d7b06b76e247933b193f0e0838c287e8a1a22745aed69d",
+    "isolatedSha256": "428852cc141db0f785d7b06b76e247933b193f0e0838c287e8a1a22745aed69d"
+  }
+}

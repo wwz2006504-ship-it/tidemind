@@ -19,7 +19,7 @@ import {createModules,lazyProxy} from '../host/aurabot/src/core/modules.js'
 import {createOneBotCapabilities} from './onebot-capabilities.mjs'
 import {aurabotHost} from './aurabot-host-fixture.mjs'
 const base=new URL('../host/custom-modules/',import.meta.url)
-const names=['autonomous-desktop','live-vision-v1','local-vision','voice-ear','xiyu-minecraft','xiyu-room-mcp','xiyu-room3d','xiyu-self-control','xiyu-voice-reference']
+const names=['autonomous-desktop','live-vision-v1','local-vision','voice-ear','my-agent-minecraft','my-agent-room-mcp','my-agent-room3d','my-agent-self-control','my-agent-voice-reference']
 const builtinNames=['stickers','voice','mood','memory','qq-tools','group-admin','imagegen','diary','qzone-social','speakup','bili','phone','persona-self','pet-link','song']
 const upstream=new URL('../host/aurabot-upstream/src/',import.meta.url)
 const candidateVoice={
@@ -36,17 +36,17 @@ export async function loadModule(id,{mount,bootstrapAgent,sourceRoot=base,entry=
  const canonical=p=>path.resolve(String(p)).replaceAll('\\','/')
  const norm=p=>{const value=canonical(p);return alias&&value.startsWith(alias+'/')?canonical('/synthetic/modules/'+id)+value.slice(alias.length):value},put=(p,v)=>files.set(norm(p),Buffer.isBuffer(v)?Buffer.from(v):Buffer.from(typeof v==='string'?v:JSON.stringify(v)))
  const dir='/synthetic/modules/'+id,room='/synthetic/room',runtime='/synthetic/runtime',session='/synthetic/session.json'
- const cfg=normalize({enabled:true,dryRun:false,ownerQQ:'20001',ownerLevel:'full',persona:{current:'dafeiyu'}})
+ const cfg=normalize({enabled:true,dryRun:false,ownerQQ:'20001',ownerLevel:'full',persona:{current:'default'}})
  put(dir+'/connection.json',{runtime_dir:runtime,runtimeDir:runtime,stateDir:runtime,room_dir:room,room_connection_file:'/synthetic/room-connection.json',sessionId:'session-test',nodeExecutable:'synthetic-node',node_executable:'synthetic-node',port:19999,installation_id:'synthetic'})
  put('/synthetic/room-connection.json',{room_dir:room});put(room+'/project.godot','synthetic')
  put(room+'/bridge/room_presence.json',{updated_at:new Date().toISOString(),manual_pause:false});put(room+'/bridge/state.json',{updated_at:new Date().toISOString()})
  put(runtime+'/data/room-state.json',{items:[],lighting:'morning'})
  put(dir+'/session-path.txt',session);put(session,{token:'s'.repeat(48)})
  put(dir+'/request.json',{statusFile:'/synthetic/voice-status.json'});put(dir+'/applied.json',{status:'applied',synthetic:true})
- put('C:/Users/USERNAME/.dsh/plugins-data/aurabot/config.json',cfg)
+ put('C:/Users/test-user/.dsh/plugins-data/aurabot/config.json',cfg)
  put('/synthetic/data/memories.json',{rev:1,items:[{id:'a',text:'SYNTHETIC MEMORY'}]})
  put('/synthetic/data/personas/synthetic.md','---\nname: synthetic\ntags: []\n---\nSYNTHETIC PERSONA')
- put('/synthetic/data/personas/dafeiyu.md','---\nname: synthetic\ntags: []\n---\nSYNTHETIC PERSONA')
+ put('/synthetic/data/personas/default.md','---\nname: synthetic\ntags: []\n---\nSYNTHETIC PERSONA')
  let active=true,httpResponse={ok:true,untrusted:true,summary:'SYNTHETIC SCREEN',expires_ms:1000},ack=true
  const fs={
   readFileSync(p,encoding){const value=files.get(norm(p));if(!value)throw Error('synthetic file missing');return encoding?value.toString('utf8'):Buffer.from(value)},
@@ -63,13 +63,13 @@ export async function loadModule(id,{mount,bootstrapAgent,sourceRoot=base,entry=
  }
  const spawn=()=>{const child=new ChildProcess();child.pid=999;child.exitCode=null;child.killed=false;child.kill=()=>{child.killed=true;child.exitCode=0;child.emit('exit',0)};children.push(child);return child}
  const http={request(options,receive){network.push(options.path);const req=new EventEmitter();req.destroy=()=>{};req.setTimeout=()=>{};req.end=()=>queueMicrotask(()=>{const res=new EventEmitter();res.statusCode=200;receive(res);res.emit('data',JSON.stringify(httpResponse));res.emit('end')});return req}}
- class Client{async connect(){}async listTools(){return {tools:(id==='xiyu-room-mcp'?roomNames:mcNames).map(name=>({name,description:'synthetic '+name,inputSchema:{type:'object',properties:{}},annotations:{readOnlyHint:true}}))}}async callTool(request){remotes.push(request);return {content:[{type:'text',text:'SYNTHETIC ACK'}],structuredContent:{connected:true}}}async close(){await closeHandler?.('client')}}
+ class Client{async connect(){}async listTools(){return {tools:(id==='my-agent-room-mcp'?roomNames:mcNames).map(name=>({name,description:'synthetic '+name,inputSchema:{type:'object',properties:{}},annotations:{readOnlyHint:true}}))}}async callTool(request){remotes.push(request);return {content:[{type:'text',text:'SYNTHETIC ACK'}],structuredContent:{connected:true}}}async close(){await closeHandler?.('client')}}
  class Transport{stderr=new EventEmitter();async close(){await closeHandler?.('transport')}}
  const requireMock=value=>{const p=String(value).replaceAll('\\','/');return p.endsWith('/catalog.js')?{catalog:{}}:p.includes('/client/index.js')?{Client}:p.includes('/stdio.js')?{StdioClientTransport:Transport}:p.includes('/streamableHttp.js')?{StreamableHTTPClientTransport:Transport}:(()=>{throw Error('unmocked require')})()}
  const smallTimers=new Set()
  let clockNow=null
  class TestDate extends Date{constructor(...args){super(...(args.length?args:[clockNow??Date.now()]))}static now(){return clockNow??Date.now()}}
- const context=vm.createContext({Date:TestDate,Buffer,URL,URLSearchParams,FormData,Blob,AbortSignal,TextDecoder,TextEncoder,console:{log(){},warn(){},error(){}},process:{pid:1,platform:'win32',env:{SystemRoot:'synthetic',PATH:'',AURABOT_DATA_DIR:'/synthetic/data',DSH_HOME:'/synthetic/home'}},fetch:async(url,init)=>{network.push(String(url));if(fetchHandler)return fetchHandler(url,init);return {ok:true,json:async()=>({service:'xiyu-room-mcp',installation_id:'synthetic'})}},
+ const context=vm.createContext({Date:TestDate,Buffer,URL,URLSearchParams,FormData,Blob,AbortSignal,TextDecoder,TextEncoder,console:{log(){},warn(){},error(){}},process:{pid:1,platform:'win32',env:{SystemRoot:'synthetic',PATH:'',AURABOT_DATA_DIR:'/synthetic/data',DSH_HOME:'/synthetic/home'}},fetch:async(url,init)=>{network.push(String(url));if(fetchHandler)return fetchHandler(url,init);return {ok:true,json:async()=>({service:'my-agent-room-mcp',installation_id:'synthetic'})}},
   setTimeout(fn,ms){if(ms<=150){const t=setTimeout(()=>{smallTimers.delete(t);fn()},1);smallTimers.add(t);return t}const token={fn};timers.add(token);return token},clearTimeout(t){timers.delete(t);smallTimers.delete(t);clearTimeout(t)},setInterval(fn){const token={fn};timers.add(token);return token},clearInterval:t=>timers.delete(t)})
  const cache=new Map()
  async function synthetic(key,value){if(cache.has(key))return cache.get(key);const keys=[...new Set(['default',...Object.keys(value)])];const m=new vm.SyntheticModule(keys,function(){this.setExport('default',value);for(const k of Object.keys(value))this.setExport(k,value[k])},{context});cache.set(key,m);return m}
@@ -110,13 +110,13 @@ export async function loadModule(id,{mount,bootstrapAgent,sourceRoot=base,entry=
  return {id,definition,module,api,exported,files,fs,writes,network,children,remotes,timers,commands,rules,owner,exec,tools,invoke,put,dispose,setAlias:value=>{alias=canonical(value)},namespace:key=>cache.get(key)?.namespace,setNow:value=>{clockNow=value},setHttp:v=>{httpResponse=v},setAck:v=>{ack=v},persona:()=>persona,pushes:()=>pushes}
 }
 
-for(const id of names)test('original '+id+' initializes and disposes with synthetic dependencies',async()=>{const f=await loadModule(id);try{assert.equal(f.definition.id,id);assert.ok(f.exported);if(id==='xiyu-minecraft')assert.equal(f.exported.status().phase,'ready');if(id==='xiyu-room-mcp')assert.equal(f.exported.status().status,'ready');for(const t of f.tools())assert.equal(typeof t.execute,'function')}finally{await f.dispose()}assert.equal(f.timers.size,0);assert.ok(f.children.every(c=>c.killed))})
+for(const id of names)test('original '+id+' initializes and disposes with synthetic dependencies',async()=>{const f=await loadModule(id);try{assert.equal(f.definition.id,id);assert.ok(f.exported);if(id==='my-agent-minecraft')assert.equal(f.exported.status().phase,'ready');if(id==='my-agent-room-mcp')assert.equal(f.exported.status().status,'ready');for(const t of f.tools())assert.equal(typeof t.execute,'function')}finally{await f.dispose()}assert.equal(f.timers.size,0);assert.ok(f.children.every(c=>c.killed))})
 
 test('candidate Minecraft disposal waits both MCP close operations and preserves unconfirmed failure',async()=>{
  let release;const gate=new Promise(resolve=>{release=resolve}),seen=[]
- const f=await loadModule('xiyu-minecraft',{closeHandler:async kind=>{seen.push(kind);await gate}})
+ const f=await loadModule('my-agent-minecraft',{closeHandler:async kind=>{seen.push(kind);await gate}})
  try{let ended=false;const closing=f.dispose().then(()=>{ended=true});await new Promise(resolve=>setTimeout(resolve,10));assert.deepEqual(seen.sort(),['client','transport']);assert.equal(ended,false);assert.equal(f.exported.status().phase,'stopping');release();await closing;assert.equal(f.exported.status().phase,'stopped')}finally{release();await f.dispose()}
- const failed=await loadModule('xiyu-minecraft',{closeHandler:async()=>{throw Error('SYNTHETIC CLOSE FAILED')}})
+ const failed=await loadModule('my-agent-minecraft',{closeHandler:async()=>{throw Error('SYNTHETIC CLOSE FAILED')}})
  await assert.rejects(failed.dispose(),/shutdown unconfirmed/);assert.equal(failed.exported.status().phase,'stop-unconfirmed')
 })
 
@@ -127,20 +127,20 @@ test('candidate ear disposal waits actual exit event rather than kill request',a
  child.exitCode=0;child.emit('exit',0);await closing;assert.equal(stopped,true);assert.equal(f.children.length,1)
 })
 
-test('self-control persona and JSON backup/restore round trip preserves synthetic content',async()=>{const f=await loadModule('xiyu-self-control');try{
- const before=f.persona().body;const write=await f.invoke('xiyu_persona',{action:'append',body:'SYNTHETIC ADDITION'});assert.equal(write.ok,true);assert.notEqual(f.persona().body,before)
- const restored=await f.invoke('xiyu_versions',{action:'restore',version_id:write.version_id});assert.equal(restored.ok,true);assert.equal(f.persona().body,before)
- const memoryBefore=JSON.parse(f.fs.readFileSync('/synthetic/data/memories.json','utf8'));const add=await f.invoke('xiyu_local_memory',{action:'add',text:'SYNTHETIC NEW'});assert.equal(add.ok,true)
- assert.equal((await f.invoke('xiyu_versions',{action:'restore',version_id:add.version_id})).ok,true)
+test('self-control persona and JSON backup/restore round trip preserves synthetic content',async()=>{const f=await loadModule('my-agent-self-control');try{
+ const before=f.persona().body;const write=await f.invoke('my-agent_persona',{action:'append',body:'SYNTHETIC ADDITION'});assert.equal(write.ok,true);assert.notEqual(f.persona().body,before)
+ const restored=await f.invoke('my-agent_versions',{action:'restore',version_id:write.version_id});assert.equal(restored.ok,true);assert.equal(f.persona().body,before)
+ const memoryBefore=JSON.parse(f.fs.readFileSync('/synthetic/data/memories.json','utf8'));const add=await f.invoke('my-agent_local_memory',{action:'add',text:'SYNTHETIC NEW'});assert.equal(add.ok,true)
+ assert.equal((await f.invoke('my-agent_versions',{action:'restore',version_id:add.version_id})).ok,true)
  const memoryAfter=JSON.parse(f.fs.readFileSync('/synthetic/data/memories.json','utf8'));assert.deepEqual(memoryAfter.items,memoryBefore.items);assert.ok(memoryAfter.rev>memoryBefore.rev)
- const invalid=await f.invoke('xiyu_versions',{action:'restore',version_id:'../../live'});assert.equal(invalid.ok,false)
+ const invalid=await f.invoke('my-agent_versions',{action:'restore',version_id:'../../live'});assert.equal(invalid.ok,false)
 }finally{await f.dispose()}})
 
-test('original room3d waits for matching ACK and rejects foreign/private scope',async()=>{const f=await loadModule('xiyu-room3d');try{assert.equal(f.tools({...f.owner,chat:{kind:'group',groupId:'30001'}}).length,0);assert.equal((await f.invoke('xiyu_room3d',{action:'move_character',target:'desk'})).ok,true)}finally{await f.dispose()}})
+test('original room3d waits for matching ACK and rejects foreign/private scope',async()=>{const f=await loadModule('my-agent-room3d');try{assert.equal(f.tools({...f.owner,chat:{kind:'group',groupId:'30001'}}).length,0);assert.equal((await f.invoke('my-agent_room3d',{action:'move_character',target:'desk'})).ok,true)}finally{await f.dispose()}})
 
 test('room shutdown waits matching physical ACK and never reports stopped before it arrives',async()=>{
- const f=await loadModule('xiyu-room3d');f.setAck(false)
- const action=f.invoke('xiyu_room3d',{action:'move_character',target:'desk'})
+ const f=await loadModule('my-agent-room3d');f.setAck(false)
+ const action=f.invoke('my-agent_room3d',{action:'move_character',target:'desk'})
  await new Promise(resolve=>setTimeout(resolve,10))
  const pending=JSON.parse(f.fs.readFileSync('/synthetic/room/bridge/tidemind-pending-command.json','utf8'))
  let stopped=false;const stop=f.dispose().then(()=>{stopped=true})
@@ -153,13 +153,13 @@ test('room shutdown waits matching physical ACK and never reports stopped before
 })
 
 test('unconfirmed room operation survives reload, blocks shutdown and cannot be overwritten by a new action',async()=>{
- const f=await loadModule('xiyu-room3d');f.setAck(false)
- assert.equal((await f.invoke('xiyu_room3d',{action:'move_character',target:'desk'})).ok,false)
+ const f=await loadModule('my-agent-room3d');f.setAck(false)
+ assert.equal((await f.invoke('my-agent_room3d',{action:'move_character',target:'desk'})).ok,false)
  const file='/synthetic/room/bridge/command.json',before=f.fs.readFileSync(file,'utf8'),pending=f.exported.status().pending_command
  await assert.rejects(f.dispose(),/outcome unconfirmed/)
- const restored=await loadModule('xiyu-room3d',{sharedFiles:f.files});try{
+ const restored=await loadModule('my-agent-room3d',{sharedFiles:f.files});try{
   assert.equal(restored.exported.status().pending_command,pending)
-  assert.equal((await restored.invoke('xiyu_room3d',{action:'move_character',target:'window'})).ok,false)
+  assert.equal((await restored.invoke('my-agent_room3d',{action:'move_character',target:'window'})).ok,false)
   assert.equal(restored.fs.readFileSync(file,'utf8'),before)
   restored.put('/synthetic/room/bridge/ack.json',{command_id:pending,status:'applied'})
   await restored.dispose();assert.equal(restored.exported.transferStatus().quiet,true)
@@ -168,9 +168,9 @@ test('unconfirmed room operation survives reload, blocks shutdown and cannot be 
 
 test('original local vision responds to synthetic evidence and becomes inactive on dispose',async()=>{const f=await loadModule('local-vision');try{assert.equal(await f.exported.observe(),'SYNTHETIC SCREEN');await f.dispose();assert.equal(await f.exported.observe(),null)}finally{await f.dispose()}})
 
-test('original live vision tools retain evidence checks and reject untrusted response shape',async()=>{const f=await loadModule('live-vision-v1');try{assert.ok(f.tools().some(t=>t.name==='xiyu_video_status'));const r=await f.invoke('xiyu_video_observe',{question:'synthetic'});assert.equal(r.ok,false);assert.equal(f.tools({...f.owner,level:'social'}).length,0)}finally{await f.dispose()}})
+test('original live vision tools retain evidence checks and reject untrusted response shape',async()=>{const f=await loadModule('live-vision-v1');try{assert.ok(f.tools().some(t=>t.name==='my-agent_video_status'));const r=await f.invoke('my-agent_video_observe',{question:'synthetic'});assert.equal(r.ok,false);assert.equal(f.tools({...f.owner,level:'social'}).length,0)}finally{await f.dispose()}})
 
-test('original Minecraft binds actual session and never calls remote for foreign execution',async()=>{const f=await loadModule('xiyu-minecraft');try{const t=f.tools().find(t=>t.name.endsWith('__get_state'));assert.ok(t);const before=f.remotes.length;const r=await t.execute({},{agent:{id:'foreign',session:{id:'foreign'}}});assert.equal(r.ok,false);assert.equal(f.remotes.length,before);assert.equal((await f.invoke(t.name)).ok,true)}finally{await f.dispose()}})
+test('original Minecraft binds actual session and never calls remote for foreign execution',async()=>{const f=await loadModule('my-agent-minecraft');try{const t=f.tools().find(t=>t.name.endsWith('__get_state'));assert.ok(t);const before=f.remotes.length;const r=await t.execute({},{agent:{id:'foreign',session:{id:'foreign'}}});assert.equal(r.ok,false);assert.equal(f.remotes.length,before);assert.equal((await f.invoke(t.name)).ok,true)}finally{await f.dispose()}})
 
 async function kernelFixture(id){
  const f=await qqFixture();let mods,loaded
@@ -180,7 +180,7 @@ async function kernelFixture(id){
    const pins=JSON.parse(readFileSync(new URL('SOURCE-MANIFEST.json',base),'utf8'))
    for(const name of Object.keys(pins).filter(name=>name.startsWith(id+'/')))copyFileSync(new URL(name,base),path.join(directory,path.basename(name)))
    helpers.setAlias(directory)
-   if(id==='xiyu-minecraft'){
+   if(id==='my-agent-minecraft'){
     const config={runtimeDir:'/synthetic/runtime',stateDir:'/synthetic/runtime',sessionId:f.agent.id,nodeExecutable:'synthetic-node'}
     helpers.put(path.join(directory,'connection.json'),config)
     api.dsh.agents.set(f.agent.id,f.agent)
@@ -206,8 +206,8 @@ for(const id of names)test('original module kernel loads and unloads custom '+id
 })
 
 test('original custom Minecraft tool through module kernel runs in actual DSH ToolRuntime',async()=>{
- const h=await kernelFixture('xiyu-minecraft');try{
-  const name='mcp__xiyu_minecraft_v2__get_state'
+ const h=await kernelFixture('my-agent-minecraft');try{
+  const name='mcp__my-agent_minecraft_v2__get_state'
   assert.ok(h.f.ctx.tools.get(name,h.f.agent))
   const result=await h.f.call(name,{},'native-custom-minecraft');assert.ok(result.value,JSON.stringify(result));assert.equal(result.value.ok,true)
   assert.ok(h.loaded.remotes.some(r=>r.name==='get_state'))
@@ -217,7 +217,7 @@ test('original custom Minecraft tool through module kernel runs in actual DSH To
 test('candidate Minecraft bootstrap uses supplied host registration hook and unloads all registrations',async()=>{
  const registered=[];let released=0
  const agent={ctx:{tools:{schemas:()=>[],register:tool=>{registered.push(tool);return ()=>{released++}}}}}
- const f=await loadModule('xiyu-minecraft',{bootstrapAgent:agent})
+ const f=await loadModule('my-agent-minecraft',{bootstrapAgent:agent})
  try{
   assert.ok(registered.length>0)
   assert.equal((await registered.find(t=>t.name.endsWith('__get_state')).execute({},f.exec)).ok,true)
@@ -226,23 +226,23 @@ test('candidate Minecraft bootstrap uses supplied host registration hook and unl
 })
 
 test('actual bootstrap registration goes through host wrapper and stale native tool is rejected after unload',async()=>{
- const h=await kernelFixture('xiyu-minecraft');try{
-  const name='mcp__xiyu_minecraft_v2__get_state'
+ const h=await kernelFixture('my-agent-minecraft');try{
+  const name='mcp__my-agent_minecraft_v2__get_state'
   const old=h.f.ctx.tools.get(name,h.f.agent);assert.ok(old)
-  const before=h.loaded.remotes.length;h.mods.stop('xiyu-minecraft')
+  const before=h.loaded.remotes.length;h.mods.stop('my-agent-minecraft')
   await assert.rejects(old.execute({},{agent:h.f.agent,callId:'old-native-bootstrap'}),/stopped or replaced/)
   assert.equal(h.loaded.remotes.length,before)
  }finally{await h.cleanup()}
 })
 
 test('self-control synthetic persona restore also runs through actual ToolRuntime and original module kernel',async()=>{
- const h=await kernelFixture('xiyu-self-control');const offs=[]
+ const h=await kernelFixture('my-agent-self-control');const offs=[]
  try{
   for(const t of h.tools())offs.push(h.f.agent.ctx.tools.register(t))
   const before=h.loaded.persona().body
-  const write=await h.f.call('xiyu_persona',{action:'append',body:'SYNTHETIC EXTRA'},'native-persona-change')
+  const write=await h.f.call('my-agent_persona',{action:'append',body:'SYNTHETIC EXTRA'},'native-persona-change')
   assert.equal(write.value.ok,true);assert.notEqual(h.loaded.persona().body,before)
-  const restore=await h.f.call('xiyu_versions',{action:'restore',version_id:write.value.version_id},'native-persona-restore')
+  const restore=await h.f.call('my-agent_versions',{action:'restore',version_id:write.value.version_id},'native-persona-restore')
   assert.equal(restore.value.ok,true);assert.equal(h.loaded.persona().body,before)
  }finally{for(const off of offs)off();await h.cleanup()}
 })
@@ -262,7 +262,7 @@ test('original autonomous-desktop callback wakes original native session through
 test('original voice-ear callback consumes synthetic inbox and follows managed original native wake path',async()=>{
  const original=await loadModule('voice-ear');const f=await aurabotHost({builtins:[original.definition]})
  try{
-  original.put('C:/Users/USERNAME/Aurabot/qq-chats/EAR_DIR/inbox.jsonl',JSON.stringify({text:'SYNTHETIC VOICE'})+'\n')
+  original.put('C:/Users/test-user/Aurabot/qq-chats/EAR_DIR/inbox.jsonl',JSON.stringify({text:'SYNTHETIC VOICE'})+'\n')
   await f.supervisor.setRest(false,{op:'wake'})
   assert.equal((await f.activityCallbacks.find(r=>r.moduleId==='voice-ear').run()).state,'done')
   assert.equal(f.requests.length,1);assert.equal(f.sent.length,1)
@@ -287,7 +287,7 @@ async function combinedHost({mode='reply'}={}){
    configPatch:{voice:{enabled:true,engine:'cosyvoice',cosyvoice:{url:'http://127.0.0.1:50000',mode:'cross_lingual'},autoChance:0},stickers:{enabled:true,autoChance:0,collect:false},imageGen:{enabled:true,apiKey:'SYNTHETIC KEY',baseUrl:'http://synthetic.invalid/v1',model:'synthetic-image'},memory:{enabled:true,dailyNewSession:false},speakUp:{enabled:true,screenPeek:false},diary:{enabled:true},bili:{enabled:true}},
    prepareModules:async({f})=>{
     audioFile=path.join(f.root,'synthetic-combined-voice.wav');writeFileSync(audioFile,buildWav(new Int16Array(500),22050))
-    custom.find(v=>v.id==='xiyu-minecraft').put('/synthetic/modules/xiyu-minecraft/connection.json',{runtimeDir:'/synthetic/runtime',stateDir:'/synthetic/runtime',sessionId:f.agent.id,nodeExecutable:'synthetic-node'})
+    custom.find(v=>v.id==='my-agent-minecraft').put('/synthetic/modules/my-agent-minecraft/connection.json',{runtimeDir:'/synthetic/runtime',stateDir:'/synthetic/runtime',sessionId:f.agent.id,nodeExecutable:'synthetic-node'})
     return {modules:custom.map(v=>({id:v.id,source:readFileSync(new URL(v.id+'/index.mjs',base),'utf8'),setDirectory:v.setAlias})),
      moduleLib:key=>{if(key==='core/store.js')return memory.namespace(key);if(key==='persona/personas.js')return persona.namespace(key);throw Error('unmocked combined module lib')},
      importModule:async url=>{const id=decodeURIComponent(new URL(url).pathname).split('/modules/')[1]?.split('/')[0];const target=custom.find(v=>v.id===id);if(!target)throw Error('unbound custom module');return {default:target.definition}}}
@@ -306,10 +306,10 @@ test('all 15 original builtins and 9 custom modules mount together with heartbea
   await f.emit(f.event(11001,'麦克风 我喜欢合成蓝色风铃'));await f.settle()
   assert.equal(f.sent.length,1);assert.equal(f.replica.replicaHead(f.local).protected_hash,protectedHash)
   await f.supervisor.setRest(false,{op:'combined-wake'});await f.handle.heartbeat.tick();assert.equal(f.sent.length,1)
-  await f.handle.modules.reload('xiyu-minecraft');assert.equal(f.handle.modules.running('xiyu-minecraft'),'user')
+  await f.handle.modules.reload('my-agent-minecraft');assert.equal(f.handle.modules.running('my-agent-minecraft'),'user')
   await f.emit(f.event(11002,'SYNTHETIC NORMAL CHAT'));await f.settle(2);assert.equal(f.sent.length,2)
   const toolNames=f.handle.modules.buildTools({chat:{kind:'private',userId:'20001',chatId:'private:20001'},level:'full',sessionId:f.agent.id}).map(t=>t.name)
-  for(const name of ['remember','recall_memory','qq_chat_history','xiyu_persona','xiyu_room3d','mcp__xiyu_minecraft_v2__get_state'])assert.ok(toolNames.includes(name),name)
+  for(const name of ['remember','recall_memory','qq_chat_history','my-agent_persona','my-agent_room3d','mcp__my-agent_minecraft_v2__get_state'])assert.ok(toolNames.includes(name),name)
   assert.equal(new Set(toolNames).size,toolNames.length)
  }finally{await h.cleanup()}
 })

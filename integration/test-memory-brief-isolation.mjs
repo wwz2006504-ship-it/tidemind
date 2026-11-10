@@ -7,7 +7,7 @@ test('opening brief only reads explicitly bound synthetic DB; missing/production
  try{
   process.env.TIDEMIND_AURABOT_MEMORY_DB=f.local;assert.match(await memoryBrief(f.agent),/SYNTHETIC IMMUTABLE CORE/)
   assert.equal(await memoryBrief({id:'other',session:{id:'other'}}),'');assert.equal(await memoryBrief(),'')
-  for(const path of [undefined,'<MEMORY_LAYERS_DIR>/memory.db','C:/Users/USERNAME/Aurabot/qq-chats/tidemind-shadow/memory-shadow.db']){
+  for(const path of [undefined,'<MEMORY_LAYERS_DIR>/memory.db','C:/Users/test-user/host/qq-data/tide-shadow/memory-shadow.db']){
    if(path===undefined)delete process.env.TIDEMIND_AURABOT_MEMORY_DB;else process.env.TIDEMIND_AURABOT_MEMORY_DB=path
    assert.equal(await memoryBrief(f.agent),'')
   }

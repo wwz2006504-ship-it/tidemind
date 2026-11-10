@@ -40,8 +40,11 @@ def main():
     if args.action=='diagnose':
         if args.dry_run:
             print('PLAN: revised ORIGINAL reconcile.mjs; both databases read-only; new report in docs');return
-        env=dict(os.environ,TIDEMIND_LIVE_DB='<MEMORY_LAYERS_DIR>/memory.db',
-            TIDEMIND_DB='C:/Users/USERNAME/Aurabot/qq-chats/tidemind-shadow/memory-shadow.db',
+        live=os.environ.get('TIDEMIND_LIVE_DB');shadow=os.environ.get('TIDEMIND_DB')
+        if not live or not shadow:
+            raise SystemExit('diagnose needs TIDEMIND_LIVE_DB and TIDEMIND_DB: the two read-only inputs for reconcile')
+        env=dict(os.environ,TIDEMIND_LIVE_DB=live,
+            TIDEMIND_DB=shadow,
             TIDEMIND_REPORT=str(ROOT/'docs/reconcile-current.json'))
         result=subprocess.run(['node',str(ROOT/'deploy/existing/reconcile.mjs')],env=env)
         raise SystemExit(result.returncode)

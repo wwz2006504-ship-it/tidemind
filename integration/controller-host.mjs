@@ -48,8 +48,8 @@ export async function controllerHost({mode='reply',storageFixture,resumeSessionI
  ctx.llm.registerAdapter(['synthetic-offline'],new Offline())
  new loop.AgentLoop(ctx,{agents:[],maxParallelToolCalls:{get:()=>1}})
  const control=new controller.SessionController(ctx,{nativeOpen:false,listWorkSliceMs:16})
- const sessionId='session-real-isolated-xiyu'
- fenced.configure({...f,bindings:[{agentId:sessionId,sessionId,logicalAgentId:'xiyu'}]})
+ const sessionId='session-real-isolated-my-agent'
+ fenced.configure({...f,bindings:[{agentId:sessionId,sessionId,logicalAgentId:'my-agent'}]})
  const memory=await import('../host/plugin/src/index.js')
  if(mountMemory)memory.apply(ctx,{dir:f.localDir,enabled:true,injectContext:true,autoCapture:true,autoCaptureMinConfidence:.75,tideEnabled:false,dailyBackup:false,logRetrieval:false,injectTokenBudget:2000})
  await fenced.drain()

@@ -14,7 +14,7 @@ class ReadinessTests(unittest.TestCase):
   self.assertEqual(result['changedOtherFields'],1);self.assertNotIn('PRIVATE',json.dumps(result))
  def test_inventory_hashes_existing_persona_without_leaking_content_or_credentials(self):
   with tempfile.TemporaryDirectory() as name:
-   root=Path(name);(root/'personas').mkdir();(root/'personas/xiyu.md').write_text('PRIVATE PERSONA',encoding='utf-8');(root/'config.json').write_text(json.dumps({'persona':{'current':'xiyu'},'token':'SECRET TOKEN'}),encoding='utf-8');(root/'memories.json').write_text('[{"text":"PRIVATE MEMORY"}]',encoding='utf-8')
+   root=Path(name);(root/'personas').mkdir();(root/'personas/my-agent.md').write_text('PRIVATE PERSONA',encoding='utf-8');(root/'config.json').write_text(json.dumps({'persona':{'current':'my-agent'},'token':'SECRET TOKEN'}),encoding='utf-8');(root/'memories.json').write_text('[{"text":"PRIVATE MEMORY"}]',encoding='utf-8')
    before={p:hashlib.sha256(p.read_bytes()).hexdigest() for p in root.rglob('*') if p.is_file()}
    first=module.inspect_data(root);second=module.inspect_data(root)
    self.assertEqual(first,second);self.assertEqual(first['jsonMemory']['items'],1);self.assertTrue(first['selectedPersona']['exists'])

@@ -18,8 +18,24 @@ const DEFAULTS = {
 export function openAuthority(file = DEFAULTS.file, sandbox = process.env.TIDEMIND_SANDBOX_ROOT) {
   if (!sandbox) throw new Error('TIDEMIND_SANDBOX_ROOT required')
   const root = realpathSync(sandbox)
-  for (const protectedRoot of ['<MEMORY_LAYERS_DIR>','C:/Users/USERNAME/Aurabot/qq-chats/tidemind-shadow','<MEMORY_LAYERS_DIR_2>']) {
-    const r = relative(resolve(protectedRoot),root)
+  // The sandbox check below already keeps the lease database inside the synthetic root. These
+  // extra guards exist so an explicit list of live directories can never overlap the sandbox.
+  // Set TIDEMIND_PROTECTED_DIRS to a path-delimited list (; on Windows, : elsewhere). Unset is
+  // allowed but warns once, because a silently empty guard is worse than a loud one.
+  const protectedDirs = String(process.env.TIDEMIND_PROTECTED_DIRS || '')
+    .split(process.platform === 'win32' ? ';' : ':')
+    .map((entry) => entry.trim())
+    .filter(Boolean)
+  if (!protectedDirs.length) {
+    if (!globalThis.__tideProtectedWarned) {
+      globalThis.__tideProtectedWarned = true
+      console.warn('[tidemind] TIDEMIND_PROTECTED_DIRS is unset; only the sandbox containment check is active')
+    }
+  }
+  for (const protectedRoot of protectedDirs) {
+    let resolved
+    try { resolved = realpathSync(resolve(protectedRoot)) } catch { continue }
+    const r = relative(resolved, root)
     if (!r || (!r.startsWith('..') && !isAbsolute(r))) throw new Error('existing production/shadow directory prohibited')
   }
   const target = existsSync(file) ? realpathSync(file) : resolve(realpathSync(resolve(file, '..')), file.split(/[\\/]/).pop())

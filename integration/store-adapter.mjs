@@ -2,12 +2,13 @@
 // lease authority. Original-store multi-row changes are committed atomically.
 import {DatabaseSync,backup} from 'node:sqlite'
 import {mkdtempSync,rmSync,realpathSync} from 'node:fs'
+import {homedir} from 'node:os'
 import {join,relative,isAbsolute} from 'node:path'
 import {pathToFileURL} from 'node:url'
 import * as replica from '../TideMind/deploy/existing/tide-replica.mjs'
 import {hash} from '../TideMind/deploy/existing/tide-gateway.mjs'
 import {writable,tableRows,storeHash,identityHash,sealBatch} from './store-batch.mjs'
-const LIVE_STORE_SRC='C:/Users/USERNAME/.dsh/profiles/desktop/node_modules/dsh-memory-layers/src/store.js'
+const LIVE_STORE_SRC=process.env.TIDEMIND_LIVE_STORE||join(homedir(),'.dsh','profiles','desktop','node_modules','dsh-memory-layers','src','store.js')
 export async function loadLiveStoreClass(srcPath=LIVE_STORE_SRC){return import(pathToFileURL(srcPath).href)}
 function cleanup(path){const root=realpathSync(process.env.TIDEMIND_SANDBOX_ROOT),r=relative(root,realpathSync(path));if(!r||r.startsWith('..')||isAbsolute(r))throw new Error('unsafe cleanup');rmSync(path,{recursive:true,force:true})}
 export async function prepareStoreOperation(srcDbPath,operation,{MemoryStore,requestHash,commitContext=null}={}){

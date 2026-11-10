@@ -1,0 +1,10 @@
+{
+  "runtime.js": {
+    "originalSha256": "304fc8d0778efbcdd8e10e80fcdc25a85b44919ded1ab96455669827eb0330f0",
+    "isolatedSha256": "53461c37cb648add99617bfae29ae7edbb274a940dc380f385ff0c58ef82a1ac"
+  },
+  "prompt.js": {
+    "originalSha256": "8589bf0815e227319347941ac30c4b49059855c38d0c052936969677d805cc67",
+    "isolatedSha256": "8589bf0815e227319347941ac30c4b49059855c38d0c052936969677d805cc67"
+  }
+}

@@ -39,7 +39,7 @@ async function boot() {
   process.env.TIDEMIND_REQUIRE_STORE_PROOF='1'
   const { MemoryStore } = await loadLiveStoreClass()
   const store = new MemoryStore(memDir)
-  store.write({ layer: 'episodic', content: '老爹今天吃了半片全麦面包', source: 'tool' })
+  store.write({ layer: 'episodic', content: '主人今天吃了半片全麦面包', source: 'tool' })
   store.close()
   const replica=await import('../TideMind/deploy/existing/tide-replica.mjs')
   replica.initializeReplica(join(memDir,'memory.db'))
@@ -64,7 +64,7 @@ test('duplicate refresh keeps one row and preserves original-store result', asyn
       expectedHash: 'GENESIS',
       mutation: {
         id: 'm-step1-dup',
-        fields: { content: '老爹今天吃了半片全麦面包', layer: 'episodic', status: 'active' }
+        fields: { content: '主人今天吃了半片全麦面包', layer: 'episodic', status: 'active' }
       }
     })
     assert.ok(['store','materialized'].includes(out.stage))

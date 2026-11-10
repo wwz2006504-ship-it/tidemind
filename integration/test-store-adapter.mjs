@@ -16,7 +16,7 @@ function freshStore(MemoryStore) {
   process.env.TIDEMIND_STORE_SIGNING_KEY='synthetic-test-signing-key-at-least-32-characters'
   const dir = mkdtempSync(join(HERE, '..', 'data', 'dry-'))
   const store = new MemoryStore(dir)
-  store.write({ layer: 'episodic', content: '老爹今天吃了半片全麦面包', tags: ['饭'], source: 'tool' })
+  store.write({ layer: 'episodic', content: '主人今天吃了半片全麦面包', tags: ['饭'], source: 'tool' })
   store.write({ layer: 'episodic', content: 'rice is a favourite', key: 'rice', source: 'tool' })
   store.close()
   return { dir, dbPath: join(dir, 'memory.db') }
@@ -46,7 +46,7 @@ test('same fact twice is a store duplicate, not a second row', async () => {
   try {
     const out = await decideWithStore(dbPath, {
       id: 'm-dup-1',
-      fields: { content: '老爹今天吃了半片全麦面包', layer: 'episodic', status: 'active' }
+      fields: { content: '主人今天吃了半片全麦面包', layer: 'episodic', status: 'active' }
     }, { MemoryStore })
     assert.equal(out.action, 'duplicate')
   } finally { rmSync(dir, { recursive: true, force: true }) }
